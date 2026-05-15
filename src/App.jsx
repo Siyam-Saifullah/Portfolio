@@ -100,8 +100,8 @@ const Hero = () => {
             Video Editor & Motion Designer
           </span>
           <h1 className="hero-title">
-            HI, I'M <span className="text-gradient">SIYAM</span><br />
-            SAIFULLAH<span className="dot text-primary">.</span>
+            HI, I'M <span className="gradient-text">SIYAM</span><br />
+            SAIFULLAH<span className="dot text-accent">.</span>
           </h1>
           <p className="hero-subtitle">
             Transforming raw footage into high-impact visual stories using <b>DaVinci Resolve</b>. Specializing in short-form content, motion graphics, and professional podcast editing.
@@ -147,6 +147,8 @@ const Hero = () => {
   );
 };
 
+const SectionDivider = () => <div className="section-divider" />;
+
 const About = () => {
   return (
     <section id="about" className="about-section">
@@ -158,7 +160,7 @@ const About = () => {
             viewport={{ once: true }}
             className="about-content"
           >
-            <h2 className="section-title">THE STORY <span className="text-gradient">BEHIND THE LENS</span></h2>
+            <h2 className="section-title">THE STORY <span className="gradient-text">BEHIND THE LENS</span></h2>
             <p className="about-text">
               I am <b>Siyam Saifullah</b>, a passionate Video Editor and Motion Graphics Designer with a deep-rooted obsession for cinematic excellence. My journey is defined by a commitment to storytelling that goes beyond the surface.
             </p>
@@ -244,7 +246,7 @@ const Portfolio = () => {
       <div className="container">
         <div className="section-header">
           <div className="header-text">
-            <h2 className="section-title">SELECTED <span className="text-gradient">WORKS</span></h2>
+            <h2 className="section-title">SELECTED <span className="gradient-text">WORKS</span></h2>
             <p className="section-subtitle">A showcase of recent projects where I combined creativity with technical precision.</p>
           </div>
           <button className="view-all">
@@ -290,7 +292,7 @@ const Services = () => {
     <section id="services" className="services-section">
       <div className="container">
         <div className="section-header-centered">
-          <h2 className="section-title text-gradient">SPECIALTIES</h2>
+          <h2 className="section-title gradient-text">SPECIALTIES</h2>
           <p className="section-subtitle">Expertise built through years of working with top-tier creators and brands.</p>
         </div>
 
@@ -328,7 +330,7 @@ const Testimonials = () => {
     <section id="testimonials" className="testimonials-section">
       <div className="container">
         <div className="section-header-centered">
-          <h2 className="section-title">WHAT <span className="text-gradient">CLIENTS SAY</span></h2>
+          <h2 className="section-title">WHAT <span className="gradient-text">CLIENTS SAY</span></h2>
         </div>
         <div className="testimonials-grid">
           {reviews.map((r, i) => (
@@ -367,7 +369,7 @@ const Process = () => {
     <section id="process" className="process-section">
       <div className="container">
         <div className="section-header-centered">
-          <h2 className="section-title">THE <span className="text-gradient">PROCESS</span></h2>
+          <h2 className="section-title">THE <span className="gradient-text">PROCESS</span></h2>
           <p className="section-subtitle">A streamlined workflow designed to deliver exceptional results with efficiency.</p>
         </div>
 
@@ -406,7 +408,7 @@ const Contact = () => {
             <Sparkles size={40} className="text-white" />
           </div>
           
-          <h2 className="contact-title">LET'S START A <span className="text-gradient">PROJECT</span></h2>
+          <h2 className="contact-title">LET'S START A <span className="gradient-text">PROJECT</span></h2>
           <p className="contact-desc">
             Ready to take your content to the next level? I'm currently available for freelance work and collaborations.
           </p>
@@ -454,11 +456,17 @@ function App() {
     <div className="app-wrapper">
       <Navbar />
       <Hero />
+      <SectionDivider />
       <About />
+      <SectionDivider />
       <Portfolio />
+      <SectionDivider />
       <Services />
+      <SectionDivider />
       <Process />
+      <SectionDivider />
       <Testimonials />
+      <SectionDivider />
       <Contact />
       <Footer />
     </div>
