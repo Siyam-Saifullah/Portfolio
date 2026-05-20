@@ -349,9 +349,10 @@ const About = () => {
 // ==========================================================================
 const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
   const videoRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => {
-    if (videoRef.current) {
+  useEffect(() => {
+    if (isHovered && videoRef.current) {
       videoRef.current.muted = false;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
@@ -363,15 +364,23 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
           }
         });
       }
+    } else if (!isHovered && videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.muted = true;
+      try {
+        videoRef.current.currentTime = 0;
+      } catch (err) {
+        // Safe catch if video has no source loaded
+      }
     }
+  }, [isHovered, videoUrl]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.muted = true;
-      videoRef.current.currentTime = 0;
-    }
+    setIsHovered(false);
   };
 
   const cardClass = aspect === 'vertical' ? 'project-card card-vertical' : 'project-card card-landscape';
@@ -388,13 +397,12 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
           alt={title} 
           className="card-image"
         />
-        {/* Live Video Preview on Hover with Sound */}
+        {/* Live Video Preview on Hover with Sound - Only load src when hovered */}
         <video 
           ref={videoRef}
-          src={videoUrl}
+          src={isHovered ? videoUrl : undefined}
           loop
           playsInline
-          preload="none"
           className="card-video-preview"
         />
       </div>
