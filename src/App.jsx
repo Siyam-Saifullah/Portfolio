@@ -394,6 +394,7 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
           src={videoUrl}
           loop
           playsInline
+          preload="none"
           className="card-video-preview"
         />
       </div>
