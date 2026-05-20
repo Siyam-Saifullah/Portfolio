@@ -347,12 +347,11 @@ const About = () => {
 // ==========================================================================
 // 6. Portfolio / Works Section (Stacked Categories: Long-Form & Short-Form)
 // ==========================================================================
-const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
+const ProjectCard = ({ title, category, image, videoUrl, aspect, isActive, onPlay }) => {
   const videoRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (isHovered && videoRef.current) {
+    if (isActive && videoRef.current) {
       videoRef.current.muted = false;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
@@ -364,61 +363,76 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect }) => {
           }
         });
       }
-    } else if (!isHovered && videoRef.current) {
+    } else if (!isActive && videoRef.current) {
       videoRef.current.pause();
       videoRef.current.muted = true;
       try {
         videoRef.current.currentTime = 0;
       } catch (err) {
-        // Safe catch if video has no source loaded
+        // Safe catch
       }
     }
-  }, [isHovered, videoUrl]);
+  }, [isActive]);
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const handleCardClick = (e) => {
+    // If video is active and showing native controls, let controls handle clicks
+    if (isActive) return;
+    onPlay();
   };
 
   const cardClass = aspect === 'vertical' ? 'project-card card-vertical' : 'project-card card-landscape';
 
   return (
     <div
-      className={cardClass}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className={`${cardClass} ${isActive ? 'active' : ''}`}
+      onClick={handleCardClick}
+      style={{ cursor: isActive ? 'default' : 'pointer' }}
     >
       <div className="card-image-wrapper">
         <img 
           src={image} 
           alt={title} 
           className="card-image"
+          style={{ opacity: isActive ? 0 : 1, transition: 'opacity 0.3s ease' }}
         />
-        {/* Live Video Preview on Hover with Sound - Only load src when hovered */}
-        <video 
-          ref={videoRef}
-          src={isHovered ? videoUrl : undefined}
-          loop
-          playsInline
-          className="card-video-preview"
-        />
+        
+        {/* Play Button Overlay */}
+        {!isActive && (
+          <div className="play-btn-overlay">
+            <Play size={20} fill="currentColor" style={{ marginLeft: '3px' }} />
+          </div>
+        )}
+
+        {/* Live Video Preview with Controls & Sound */}
+        {isActive && (
+          <video 
+            ref={videoRef}
+            src={videoUrl}
+            loop
+            playsInline
+            controls
+            className="card-video-preview"
+          />
+        )}
       </div>
-      <div className="card-overlay">
-        <span className="card-category">
-          {category}
-        </span>
-        <h3 className="card-title">
-          {title}
-        </h3>
-      </div>
+      
+      {!isActive && (
+        <div className="card-overlay">
+          <span className="card-category">
+            {category}
+          </span>
+          <h3 className="card-title">
+            {title}
+          </h3>
+        </div>
+      )}
     </div>
   );
 };
 
 const Portfolio = () => {
+  const [activeTitle, setActiveTitle] = useState(null);
+
   const projects = [
     // Landscape Works (16:9 format)
     { 
@@ -495,6 +509,8 @@ const Portfolio = () => {
               <ProjectCard 
                 key={i} 
                 {...p} 
+                isActive={activeTitle === p.title}
+                onPlay={() => setActiveTitle(p.title)}
               />
             ))}
           </div>
@@ -514,6 +530,8 @@ const Portfolio = () => {
               <ProjectCard 
                 key={i} 
                 {...p} 
+                isActive={activeTitle === p.title}
+                onPlay={() => setActiveTitle(p.title)}
               />
             ))}
           </div>
