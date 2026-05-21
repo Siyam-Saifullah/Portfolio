@@ -444,25 +444,25 @@ const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
 
   const projects = [
-    // Vertical Works (9:16 format)
+    // Landscape Works (16:9 format)
     { 
       title: "Dynamic Product Promo", 
       category: "CREATIVE SHORTS", 
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194529845?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
-      aspect: "vertical",
+      aspect: "landscape",
       desc: "An e-commerce social hook styled with kinetic typography overlays and motion graphics.",
       client: "Direct to Consumer Brand",
-      style: "Dynamic Captioning / Vertical Cut",
+      style: "Dynamic Captioning / Widescreen Cut",
       software: ["DaVinci Resolve Studio"]
     },
-    // Landscape Works (16:9 format)
+    // Vertical Works (9:16 format)
     { 
       title: "Virat Kohli Cinematic Edit", 
       category: "SPORTS REELS", 
       image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194533318?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
-      aspect: "landscape",
+      aspect: "vertical",
       desc: "A high-retention sports edit. Employs speed ramping, rhythmic sync to audio feeds, and heavy audio soundscapes.",
       client: "Sports Hub",
       style: "Rhythmic / Viral Short",
@@ -473,7 +473,7 @@ const Portfolio = () => {
       category: "LONG FORM CAMPAIGNS", 
       image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194533525?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
-      aspect: "landscape",
+      aspect: "vertical",
       desc: "A wide cinematic commercial campaign focusing on precise scene assembly, fluid narrative arcs, and dynamic dialogue pacing.",
       client: "Vogue Commerce",
       style: "Corporate / Clean Pacing",
