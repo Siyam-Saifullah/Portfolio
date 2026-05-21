@@ -347,7 +347,7 @@ const About = () => {
 // ==========================================================================
 // 6. Portfolio / Works Section (Stacked Categories: Long-Form & Short-Form)
 // ==========================================================================
-const ProjectCard = ({ title, category, image, videoUrl, aspect, isActive, onPlay }) => {
+const ProjectCard = ({ title, category, image, videoUrl, iframeSrc, aspect, isActive, onPlay }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -404,7 +404,7 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect, isActive, onPla
         )}
 
         {/* Live Video Preview with Controls & Sound */}
-        {isActive && (
+        {isActive && !iframeSrc && (
           <video 
             ref={videoRef}
             src={videoUrl}
@@ -412,6 +412,16 @@ const ProjectCard = ({ title, category, image, videoUrl, aspect, isActive, onPla
             playsInline
             controls
             className="card-video-preview"
+          />
+        )}
+        {isActive && iframeSrc && (
+          <iframe 
+            src={`${iframeSrc}&autoplay=1`}
+            className="card-video-preview"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            allowFullScreen
+            title={title}
           />
         )}
       </div>
@@ -434,51 +444,40 @@ const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
 
   const projects = [
-    // Landscape Works (16:9 format)
-    { 
-      title: "Commercial Editorial Assembly", 
-      category: "LONG FORM CAMPAIGNS", 
-      image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
-      videoUrl: "/video/horaizontal 01.mov",
-      aspect: "landscape",
-      desc: "A wide cinematic commercial campaign focusing on precise scene assembly, fluid narrative arcs, and dynamic dialogue pacing.",
-      client: "Vogue Commerce",
-      style: "Corporate / Clean Pacing",
-      software: ["DaVinci Resolve Studio", "After Effects CC"]
-    },
     // Vertical Works (9:16 format)
     { 
-      title: "Virat Kohli Cinematic Edit", 
-      category: "CREATIVE SHORTS & REELS", 
-      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000",
-      videoUrl: "/video/vertical 01.mp4",
+      title: "Dynamic Product Promo", 
+      category: "CREATIVE SHORTS", 
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1194529845?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "vertical",
-      desc: "A high-retention portrait-format sports edit. Employs speed ramping, rhythmic sync to audio feeds, and heavy audio soundscapes.",
+      desc: "An e-commerce social hook styled with kinetic typography overlays and motion graphics.",
+      client: "Direct to Consumer Brand",
+      style: "Dynamic Captioning / Vertical Cut",
+      software: ["DaVinci Resolve Studio"]
+    },
+    // Landscape Works (16:9 format)
+    { 
+      title: "Virat Kohli Cinematic Edit", 
+      category: "SPORTS REELS", 
+      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1194533318?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "landscape",
+      desc: "A high-retention sports edit. Employs speed ramping, rhythmic sync to audio feeds, and heavy audio soundscapes.",
       client: "Sports Hub",
       style: "Rhythmic / Viral Short",
       software: ["DaVinci Resolve Studio", "After Effects"]
     },
     { 
-      title: "Dynamic Product Promo", 
-      category: "COMMERCIAL REELS", 
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000",
-      videoUrl: "/video/vertical 02.mp4",
-      aspect: "vertical",
-      desc: "An e-commerce social hook styled with kinetic typography overlays, motion graphics, and audio stabilization features.",
-      client: "Direct to Consumer Brand",
-      style: "Dynamic Captioning / Vertical Cut",
-      software: ["DaVinci Resolve Studio"]
-    },
-    { 
-      title: "DaVinci Resolve Pacing Showcase", 
-      category: "SOCIAL METRIC EDITS", 
-      image: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&q=80&w=1000",
-      videoUrl: "/video/vertical 03.mp4",
-      aspect: "vertical",
-      desc: "A fast-paced creative sequence designed to maximize retention rates, using jump cuts, micro-animations, and vocal pacing sync.",
-      client: "Self Promotion",
-      style: "High Retention Pacing",
-      software: ["DaVinci Resolve Studio", "Fairlight Audio"]
+      title: "Commercial Editorial Assembly", 
+      category: "LONG FORM CAMPAIGNS", 
+      image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1194533525?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "landscape",
+      desc: "A wide cinematic commercial campaign focusing on precise scene assembly, fluid narrative arcs, and dynamic dialogue pacing.",
+      client: "Vogue Commerce",
+      style: "Corporate / Clean Pacing",
+      software: ["DaVinci Resolve Studio", "After Effects CC"]
     }
   ];
 
