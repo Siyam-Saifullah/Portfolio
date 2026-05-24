@@ -28,8 +28,8 @@ const Loader = ({ onComplete }) => {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
-    const duration = 1600;
-    const interval = 20;
+    const duration = 1200;
+    const interval = 25;
     const step = 100 / (duration / interval);
     
     const timer = setInterval(() => {
@@ -37,7 +37,7 @@ const Loader = ({ onComplete }) => {
         const next = prev + step;
         if (next >= 100) {
           clearInterval(timer);
-          setTimeout(onComplete, 300);
+          setTimeout(onComplete, 200);
           return 100;
         }
         return next;
@@ -52,23 +52,25 @@ const Loader = ({ onComplete }) => {
       className="loader-container"
       exit={{ 
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
-        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } 
+        transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } 
       }}
     >
       <div className="loader-inner">
         <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="loader-logo"
         >
-          Welcome to <span className="text-[#dfc7a7] font-normal lowercase italic font-serif">siyamsaifullah.com</span>
+          <span className="text-[#dfc7a7] font-normal lowercase italic font-serif">loading</span>
         </motion.div>
         
         <div className="loader-progress-track">
-          <div 
-            className="loader-progress-bar" 
-            style={{ width: `${percent}%` }}
+          <motion.div 
+            className="loader-progress-bar"
+            initial={{ width: 0 }}
+            animate={{ width: `${percent}%` }}
+            transition={{ type: 'tween', ease: 'linear' }}
           />
         </div>
         
@@ -217,26 +219,46 @@ const Hero = () => {
       
       <div className="container hero-layout">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="hero-text-content"
         >
-          <span className="badge">
+          <motion.span 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="badge"
+          >
             <Sparkles size={10} className="inline mr-2 text-white/60" />
             VIDEO EDITOR &amp; MOTION DESIGNER
-          </span>
-          <h1 className="hero-title">
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="hero-title"
+          >
             EDITS THAT<br />
             <span className="text-[#dfc7a7] italic font-light font-serif lowercase">Stop the Scroll</span><br />
             &amp; DRIVE RESULTS
-          </h1>
-          <p className="hero-subtitle">
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="hero-subtitle"
+          >
             I am Siyam Saifullah. I craft high-retention short-form reels, viral social content, and cinematic long-form campaigns using DaVinci Resolve. No boring content. No wasted time.
-          </p>
+          </motion.p>
 
           {/* Social proof strip */}
-          <div className="hero-social-proof">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="hero-social-proof"
+          >
             <div className="proof-avatars">
               <div className="proof-avatar" style={{ background: 'linear-gradient(135deg, #dfc7a7, #a08060)' }}>S</div>
               <div className="proof-avatar" style={{ background: 'linear-gradient(135deg, #6b7a99, #3d4a63)' }}>J</div>
@@ -248,22 +270,27 @@ const Hero = () => {
               </div>
               <span>Trusted by creators &amp; brands worldwide</span>
             </div>
-          </div>
+          </motion.div>
           
-          <div className="hero-actions">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="hero-actions"
+          >
             <a href="#works" className="btn btn-primary btn-large">
               VIEW MY WORK <Play size={14} fill="currentColor" />
             </a>
             <a href="#contact" className="btn btn-glass btn-large">
               LET'S CONNECT <ArrowRight size={14} />
             </a>
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="hero-image-wrapper"
         >
           <div className="image-frame-container">
@@ -273,9 +300,9 @@ const Hero = () => {
           </div>
           
           <motion.div 
-            initial={{ y: 15, opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
             className="experience-tag glass animate-float"
           >
             <span className="years">2+</span>
@@ -287,7 +314,7 @@ const Hero = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
+        transition={{ delay: 1, duration: 0.8 }}
         className="scroll-indicator"
       >
         <div className="line"></div>
@@ -318,10 +345,15 @@ const StatsStrip = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
+              transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="stats-strip-item"
             >
-              <Counter value={s.value} />
+              <motion.div
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Counter value={s.value} />
+              </motion.div>
               <span className="stats-strip-label">{s.label}</span>
               <span className="stats-strip-sub">{s.sub}</span>
             </motion.div>
@@ -337,7 +369,7 @@ const SectionDivider = () => <div className="section-divider" />;
 // ==========================================================================
 // 6. Portfolio / Works Section
 // ==========================================================================
-const ProjectCard = ({ title, category, image, videoUrl, iframeSrc, aspect, isActive, onPlay }) => {
+const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPlay }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -415,17 +447,6 @@ const ProjectCard = ({ title, category, image, videoUrl, iframeSrc, aspect, isAc
           />
         )}
       </div>
-      
-      {!isActive && (
-        <div className="card-overlay">
-          <span className="card-category">
-            {category}
-          </span>
-          <h3 className="card-title">
-            {title}
-          </h3>
-        </div>
-      )}
     </div>
   );
 };
@@ -434,47 +455,37 @@ const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
 
   const projects = [
-    // Landscape (16:9 widescreen)
     { 
       title: "Cinematic Brand Edit", 
-      category: "LONG FORM CAMPAIGNS", 
       image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194529845?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "landscape",
     },
-    // Vertical (9:16 portrait)
     { 
       title: "Sports Cinematic Reel", 
-      category: "SPORTS & REELS", 
       image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194533318?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "vertical",
     },
     { 
       title: "Commercial Editorial", 
-      category: "COMMERCIAL CAMPAIGNS", 
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194533525?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "vertical",
     },
     { 
       title: "Vertical Short Edit 03", 
-      category: "CREATIVE SHORTS", 
       image: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194538039?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "vertical",
     },
     { 
       title: "Vertical Short Edit 04", 
-      category: "SOCIAL METRIC EDITS", 
       image: "https://images.unsplash.com/photo-1535016120720-40c646be5580?auto=format&fit=crop&q=80&w=1000",
       iframeSrc: "https://player.vimeo.com/video/1194538346?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
       aspect: "vertical",
     }
   ];
-
-  const landscapeProjects = projects.filter(p => p.aspect === 'landscape');
-  const verticalProjects = projects.filter(p => p.aspect === 'vertical');
 
   return (
     <section id="works" className="portfolio-section">
@@ -482,49 +493,26 @@ const Portfolio = () => {
         <div className="section-header">
           <div>
             <span className="text-[10px] font-bold tracking-[0.25em] text-[#dfc7a7] uppercase">SELECTED WORKS</span>
-            <h2 className="section-title">PORTFOLIO &amp; <span className="text-[#dfc7a7] italic font-light lowercase">Edits</span></h2>
+            <h2 className="section-title">PORTFOLIO</h2>
           </div>
-          <button className="view-all">
-            VIEW ALL <ChevronRight size={14} />
-          </button>
         </div>
         
-        {/* Long-Form Widescreen */}
-        <div className="mb-16">
-          <div className="column-header mb-6">
-            <h3 className="column-title">Long-Form Works</h3>
-            <p className="column-subtitle">Cinematic widescreen 16:9 commercial campaigns</p>
-          </div>
-          <div className="landscape-works-grid">
-            {landscapeProjects.map((p, i) => (
+        {/* Smart Mixed Layout */}
+        <div className="portfolio-grid-smart">
+          {projects.map((p, i) => (
+            <div key={i} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
               <ProjectCard 
-                key={i} 
                 {...p} 
                 isActive={activeTitle === p.title}
                 onPlay={() => setActiveTitle(p.title)}
               />
-            ))}
-          </div>
-        </div>
-
-        <div className="h-[1px] bg-white/5 w-full my-12" />
-
-        {/* Short-Form Vertical */}
-        <div>
-          <div className="column-header mb-6">
-            <h3 className="column-title">Short-Form Works &amp; Reels</h3>
-            <p className="column-subtitle">High-retention 9:16 portrait social media layouts</p>
-          </div>
-          <div className="vertical-works-grid">
-            {verticalProjects.map((p, i) => (
-              <ProjectCard 
-                key={i} 
-                {...p} 
-                isActive={activeTitle === p.title}
-                onPlay={() => setActiveTitle(p.title)}
-              />
-            ))}
-          </div>
+              {activeTitle === p.title && (
+                <div className="video-label">
+                  <h3>{p.title}</h3>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -588,19 +576,31 @@ const Services = () => {
             <motion.div 
               key={i} 
               className="service-card"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
+              transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8 }}
             >
-              <div className="service-icon-wrapper">
+              <motion.div 
+                className="service-icon-wrapper"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ duration: 0.3 }}
+              >
                 {s.icon}
-              </div>
+              </motion.div>
               <h3 className="service-card-title">{s.title}</h3>
               <p className="service-card-desc">{s.desc}</p>
               <div className="service-tags">
                 {s.tags.map((tag, ti) => (
-                  <span key={ti} className="service-tag">{tag}</span>
+                  <motion.span 
+                    key={ti} 
+                    className="service-tag"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {tag}
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
@@ -711,13 +711,20 @@ const Process = () => {
           {steps.map((step, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: i * 0.15, duration: 0.6 }}
+              transition={{ delay: i * 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8 }}
               className="process-item"
             >
-              <span className="process-number">{step.number}</span>
+              <motion.span 
+                className="process-number"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {step.number}
+              </motion.span>
               <h3 className="process-item-title">{step.title}</h3>
               <p className="process-item-desc">{step.desc}</p>
             </motion.div>
@@ -750,18 +757,35 @@ const Testimonials = () => {
           {reviews.map((r, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
+              transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8 }}
               className="testimonial-card glass"
             >
               <div className="testimonial-stars">
-                {[...Array(5)].map((_, si) => <Star key={si} size={12} fill="#dfc7a7" stroke="none" />)}
+                {[...Array(5)].map((_, si) => (
+                  <motion.div
+                    key={si}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 + si * 0.05, duration: 0.4 }}
+                  >
+                    <Star size={12} fill="#dfc7a7" stroke="none" />
+                  </motion.div>
+                ))}
               </div>
               <p className="testimonial-text">{r.text}</p>
               <div className="testimonial-footer">
-                <div className="testimonial-avatar">{r.name[0]}</div>
+                <motion.div 
+                  className="testimonial-avatar"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {r.name[0]}
+                </motion.div>
                 <div className="testimonial-info">
                   <h4 className="testimonial-name">{r.name}</h4>
                   <p className="testimonial-role">{r.role}</p>
@@ -783,62 +807,112 @@ const Contact = () => {
     <section id="contact" className="contact-section">
       <div className="container contact-container">
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="contact-card"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="contact-card-minimal"
         >
-          <div className="contact-glow">
-            <Sparkles size={20} className="text-black" />
-          </div>
-          
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#dfc7a7] uppercase mb-4 block">GET IN TOUCH</span>
-          <h2 className="contact-title">LET'S BUILD A <span className="text-[#dfc7a7] italic font-light lowercase">Masterpiece</span></h2>
-          <p className="contact-desc">
-            Ready to elevate your video content? I am open for commissions, remote editorial roles, and long-term post-production partnerships.
-          </p>
-          
-          <div className="contact-actions">
-            <a href="mailto:siyamsaifullah@gmail.com" className="btn btn-primary btn-large">
-              <Mail size={16} /> START A PROJECT
-            </a>
-            <div className="social-links">
-              <a 
-                href="https://www.instagram.com/siyam_saifullah/?hl=en" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="social-icon"
-                title="Instagram"
-              >
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/siyam-saifullah-739825406/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="social-icon"
-                title="LinkedIn"
-              >
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-              </a>
-              <a 
-                href="https://x.com/home" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="social-icon"
-                title="X (Twitter)"
-              >
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="contact-header-minimal"
+          >
+            <span className="contact-label">LET'S COLLABORATE</span>
+            <h2 className="contact-title-minimal">Ready to Create Something<br /><span className="text-[#dfc7a7]">Extraordinary?</span></h2>
+          </motion.div>
+
+          <div className="contact-content-minimal">
+            <motion.a
+              href="mailto:siyamsaifullah@gmail.com"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.03, x: 5 }}
+              className="contact-email-link"
+            >
+              <Mail size={20} />
+              <div className="email-info">
+                <span className="email-label">Email</span>
+                <span className="email-value">siyamsaifullah@gmail.com</span>
+              </div>
+              <ArrowRight size={16} />
+            </motion.a>
+
+            <div className="contact-divider" />
+
+            <div className="contact-socials-minimal">
+              <span className="socials-label">Follow & Connect</span>
+              <div className="socials-grid-minimal">
+                <motion.a
+                  href="https://www.instagram.com/siyam_saifullah/?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  whileHover={{ scale: 1.12, y: -5 }}
+                  className="social-link-minimal"
+                  title="Instagram"
+                >
+                  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <span>Instagram</span>
+                </motion.a>
+
+                <motion.a
+                  href="https://www.linkedin.com/in/siyam-saifullah-739825406/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.35 }}
+                  whileHover={{ scale: 1.12, y: -5 }}
+                  className="social-link-minimal"
+                  title="LinkedIn"
+                >
+                  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                  <span>LinkedIn</span>
+                </motion.a>
+
+                <motion.a
+                  href="https://x.com/home"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  whileHover={{ scale: 1.12, y: -5 }}
+                  className="social-link-minimal"
+                  title="X (Twitter)"
+                >
+                  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                  <span>X / Twitter</span>
+                </motion.a>
+              </div>
             </div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="contact-footer-minimal"
+          >
+            <p>Let's create something that resonates. Whether you need cinematic editing, motion graphics, or a complete visual transformation—I'm ready to collaborate.</p>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -902,23 +976,11 @@ function App() {
           <Hero />
           
           <StatsStrip />
-
-          <SectionDivider />
           <Portfolio />
-          
-          <SectionDivider />
           <Services />
-          
-          <SectionDivider />
           <About />
-          
-          <SectionDivider />
           <Process />
-          
-          <SectionDivider />
           <Testimonials />
-          
-          <SectionDivider />
           <Contact />
           
           <Footer />
