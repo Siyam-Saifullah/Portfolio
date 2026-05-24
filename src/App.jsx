@@ -174,7 +174,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <a href="#" className="logo logo-with-avatar">
           <img src={profileImg} alt="Siyam Saifullah" className="nav-avatar" />
-          <span className="logo-text">SIYAM</span><span className="dot">.</span>
+          <span className="logo-text">SIYAM <span className="text-sm">SAIFULLAH</span></span><span className="dot">.</span>
         </a>
 
         <div className="nav-links">
@@ -247,6 +247,8 @@ const Hero = () => {
       <div className="hero-bg-grid" />
       <div className="hero-blur-orb orb-1" />
       <div className="hero-blur-orb orb-2" />
+      <motion.div className="hero-blur-orb orb-3" animate={{ x: [0, 50, -30, 0], y: [0, -30, 50, 0] }} transition={{ duration: 15, repeat: Infinity }} />
+      <motion.div className="hero-blur-orb orb-4" animate={{ x: [0, -40, 30, 0], y: [0, 40, -30, 0] }} transition={{ duration: 20, repeat: Infinity }} />
       
       <div className="container hero-layout">
         <motion.div
@@ -261,20 +263,14 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="badge premium-badge"
           >
-            <Zap size={12} className="animate-pulse" />
-            <span>PREMIUM VIDEO EDITOR</span>
-          </motion.div>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            <Zap size={12} className="animate-pulse" style={{ color: '#10b981' }} />
             transition={{ duration: 0.9, delay: 0.3 }}
             className="hero-title premium-title"
           >
             CUTS THAT
             <motion.span 
-              className="text-[#a78bfa] glow-text"
-              animate={{ textShadow: ['0 0 10px rgba(167, 139, 250, 0.3)', '0 0 20px rgba(167, 139, 250, 0.6)', '0 0 10px rgba(167, 139, 250, 0.3)'] }}
+              className="text-[#10b981] glow-text"
+              animate={{ textShadow: ['0 0 10px rgba(16, 185, 129, 0.3)', '0 0 20px rgba(16, 185, 129, 0.6)', '0 0 10px rgba(16, 185, 129, 0.3)'] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               {' '}CAPTIVATE
@@ -322,7 +318,9 @@ const Hero = () => {
           transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="hero-image-wrapper premium-image"
         >
+          <motion.div className="image-glow-bg" animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }} transition={{ duration: 4, repeat: Infinity }} />
           <div className="premium-frame">
+            <motion.div className="frame-border-animated" animate={{ boxShadow: ['0 0 40px rgba(16, 185, 129, 0.3), inset 0 0 30px rgba(167, 139, 250, 0.1)', '0 0 60px rgba(20, 184, 166, 0.5), inset 0 0 30px rgba(243, 63, 94, 0.1)', '0 0 40px rgba(167, 139, 250, 0.3), inset 0 0 30px rgba(251, 191, 36, 0.1)', '0 0 40px rgba(16, 185, 129, 0.3), inset 0 0 30px rgba(167, 139, 250, 0.1)'] }} transition={{ duration: 5, repeat: Infinity }} />
             <div className="frame-border" />
             <img src={profileImg} alt="Siyam Saifullah" className="hero-image premium-image-img" />
             <div className="frame-accent" />
