@@ -21,6 +21,7 @@ import {
 import './App.css';
 
 import profileImg from './assets/profile.jpg';
+import heroProfileImg from './assets/hero-profile.png';
 
 // ==========================================================================
 // PREMIUM VIDEO EDITING TIMELINE MARKER
@@ -174,7 +175,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <a href="#" className="logo logo-with-avatar">
           <img src={profileImg} alt="Siyam Saifullah" className="nav-avatar" />
-          <span className="logo-text">SIYAM <span className="text-sm">SAIFULLAH</span></span><span className="dot">.</span>
+          <span className="logo-text">SIYAM SAIFULLAH</span><span className="dot">.</span>
         </a>
 
         <div className="nav-links">
@@ -245,10 +246,6 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-bg-grid" />
-      <div className="hero-blur-orb orb-1" />
-      <div className="hero-blur-orb orb-2" />
-      <motion.div className="hero-blur-orb orb-3" animate={{ x: [0, 50, -30, 0], y: [0, -30, 50, 0] }} transition={{ duration: 15, repeat: Infinity }} />
-      <motion.div className="hero-blur-orb orb-4" animate={{ x: [0, -40, 30, 0], y: [0, 40, -30, 0] }} transition={{ duration: 20, repeat: Infinity }} />
       
       <div className="container hero-layout">
         <motion.div
@@ -263,18 +260,20 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="badge premium-badge"
           >
-            <Zap size={12} className="animate-pulse" style={{ color: '#10b981' }} />
+            <Zap size={12} className="animate-pulse" style={{ color: '#a78bfa' }} />
+            <span>PREMIUM VIDEO EDITOR</span>
+          </motion.div>
+
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3 }}
             className="hero-title premium-title"
           >
             CUTS THAT
-            <motion.span 
-              className="text-[#10b981] glow-text"
-              animate={{ textShadow: ['0 0 10px rgba(16, 185, 129, 0.3)', '0 0 20px rgba(16, 185, 129, 0.6)', '0 0 10px rgba(16, 185, 129, 0.3)'] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
+            <span className="accent-text">
               {' '}CAPTIVATE
-            </motion.span>
+            </span>
             <br />& CONVERT
           </motion.h1>
 
@@ -318,27 +317,18 @@ const Hero = () => {
           transition={{ duration: 1.1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="hero-image-wrapper premium-image"
         >
-          <motion.div className="image-glow-bg" animate={{ scale: [1, 1.05, 1], opacity: [0.6, 0.8, 0.6] }} transition={{ duration: 4, repeat: Infinity }} />
           <div className="premium-frame">
-            <motion.div className="frame-border-animated" animate={{ boxShadow: ['0 0 40px rgba(16, 185, 129, 0.3), inset 0 0 30px rgba(167, 139, 250, 0.1)', '0 0 60px rgba(20, 184, 166, 0.5), inset 0 0 30px rgba(243, 63, 94, 0.1)', '0 0 40px rgba(167, 139, 250, 0.3), inset 0 0 30px rgba(251, 191, 36, 0.1)', '0 0 40px rgba(16, 185, 129, 0.3), inset 0 0 30px rgba(167, 139, 250, 0.1)'] }} transition={{ duration: 5, repeat: Infinity }} />
             <div className="frame-border" />
-            <img src={profileImg} alt="Siyam Saifullah" className="hero-image premium-image-img" />
+            <img src={heroProfileImg} alt="Siyam Saifullah" className="hero-image premium-image-img" />
             <div className="frame-accent" />
           </div>
           
-          <motion.div 
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.7 }}
-            className="experience-badge"
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
+          <div className="experience-badge">
             <div className="badge-content">
               <span className="years">2+</span>
               <span className="label">Years<br />Experience</span>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
 
@@ -393,7 +383,7 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.6 }}
       whileHover={{ y: -8 }}
       className={`${cardClass} ${isActive ? 'active' : ''}`}
@@ -495,7 +485,7 @@ const Portfolio = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: false, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="section-header premium-header"
         >
@@ -601,7 +591,7 @@ const Services = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: false, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="section-header-centered premium-header"
         >
@@ -617,9 +607,9 @@ const Services = () => {
               className="service-card premium-service-card"
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: i * 0.08, duration: 0.6 }}
-              whileHover={{ y: -12, boxShadow: '0 20px 50px rgba(255, 215, 0, 0.15)' }}
+              whileHover={{ y: -12, boxShadow: '0 20px 50px rgba(167, 139, 250, 0.16)' }}
             >
               <motion.div 
                 className="service-icon-wrapper premium-icon"
@@ -660,7 +650,7 @@ const About = () => {
           <motion.div 
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.8 }}
             className="about-content"
           >
@@ -685,7 +675,7 @@ const About = () => {
                   className="check-item"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
                   <CheckCircle2 size={16} className="check-icon" />
@@ -709,7 +699,7 @@ const About = () => {
           <motion.div 
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: false, margin: '-100px' }}
             transition={{ duration: 0.8 }}
             className="about-visual"
           >
@@ -751,7 +741,7 @@ const Process = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: false, margin: '-100px' }}
           transition={{ duration: 0.7 }}
           className="section-header-centered premium-header"
         >
@@ -765,7 +755,7 @@ const Process = () => {
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: i * 0.15, duration: 0.7 }}
               whileHover={{ y: -12 }}
               className="process-item premium-process-item"
@@ -796,14 +786,14 @@ const Contact = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8 }}
           className="contact-card-premium"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="contact-header-premium"
           >
@@ -816,7 +806,7 @@ const Contact = () => {
               href="mailto:siyamsaifullah@gmail.com"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.2 }}
               whileHover={{ scale: 1.05, x: 8 }}
               className="contact-email-link premium-link"
@@ -846,7 +836,7 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ duration: 0.5, delay: 0.3 + i * 0.05 }}
                     whileHover={{ scale: 1.15, y: -5 }}
                     className="social-link-premium"
@@ -861,7 +851,7 @@ const Contact = () => {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.5 }}
             className="contact-footer-premium"
           >
@@ -880,23 +870,41 @@ const Footer = () => {
   return (
     <footer className="footer premium-footer">
       <div className="container footer-content">
-        <div className="footer-logo-wrap">
+        <motion.div
+          className="footer-logo-wrap"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+        >
           <img src={profileImg} alt="Siyam" className="footer-avatar" />
           <div className="logo logo-small">
-            SIYAM<span className="dot">.</span>
+            SIYAM SAIFULLAH<span className="dot">.</span>
           </div>
-        </div>
-        <div className="footer-info text-xs">
-          © {new Date().getFullYear()} Siyam Saifullah. Professional Video Editor.
-        </div>
-        <div className="footer-links">
+        </motion.div>
+        <motion.div
+          className="footer-info text-xs"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5, delay: 0.08 }}
+        >
+          &copy; {new Date().getFullYear()} Siyam Saifullah. Professional Video Editor.
+        </motion.div>
+        <motion.div
+          className="footer-links"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5, delay: 0.16 }}
+        >
           <a href="https://www.linkedin.com/in/siyam-saifullah-739825406/" target="_blank" rel="noopener noreferrer" className="footer-link">
             LinkedIn
           </a>
           <a href="https://www.instagram.com/siyam_saifullah/?hl=en" target="_blank" rel="noopener noreferrer" className="footer-link">
             Instagram
           </a>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );
