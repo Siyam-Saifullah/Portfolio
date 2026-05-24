@@ -453,6 +453,7 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
 
 const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
+  const [activeTab, setActiveTab] = useState('talking');
 
   const projects = [
     { 
@@ -493,26 +494,44 @@ const Portfolio = () => {
         <div className="section-header">
           <div>
             <span className="text-[10px] font-bold tracking-[0.25em] text-[#dfc7a7] uppercase">SELECTED WORKS</span>
-            <h2 className="section-title">PORTFOLIO</h2>
+            <h2 className="section-title">MY WORK</h2>
+          </div>
+          <div className="portfolio-tabs">
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === 'talking' ? 'active' : ''}`}
+              onClick={() => setActiveTab('talking')}
+            >
+              Talking Head
+            </button>
+            <button
+              type="button"
+              className={`tab-btn ${activeTab === 'shorts' ? 'active' : ''}`}
+              onClick={() => setActiveTab('shorts')}
+            >
+              Shorts
+            </button>
           </div>
         </div>
         
         {/* Smart Mixed Layout */}
         <div className="portfolio-grid-smart">
-          {projects.map((p, i) => (
-            <div key={i} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
-              <ProjectCard 
-                {...p} 
-                isActive={activeTitle === p.title}
-                onPlay={() => setActiveTitle(p.title)}
-              />
-              {activeTitle === p.title && (
-                <div className="video-label">
-                  <h3>{p.title}</h3>
-                </div>
-              )}
-            </div>
-          ))}
+          {projects
+            .filter((p) => activeTab === 'talking' ? p.aspect === 'landscape' : p.aspect === 'vertical')
+            .map((p, i) => (
+              <div key={i} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
+                <ProjectCard 
+                  {...p} 
+                  isActive={activeTitle === p.title}
+                  onPlay={() => setActiveTitle(p.title)}
+                />
+                {activeTitle === p.title && (
+                  <div className="video-label">
+                    <h3>{p.title}</h3>
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </section>
