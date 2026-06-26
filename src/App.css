@@ -45,13 +45,16 @@ section > .container, .premium-footer > .container { position:relative; z-index:
 .navbar-progress-line { position:absolute; top:0; left:0; height:2px; background:linear-gradient(90deg,var(--accent-purple),var(--accent-teal)); transform-origin:left; }
 .nav-container { display:flex; align-items:center; justify-content:space-between; padding:.4rem 0; }
 .logo { display:inline-flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--text-primary); font-weight:800; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
-.logo-text { display:inline; }
-.navbar-scrolled .logo-text { display:none; }
-.logo-with-avatar .nav-avatar { width:26px; height:26px; border-radius:999px; object-fit:cover; border:2px solid var(--accent-purple); }
-.logo .dot { color:var(--accent-purple); font-weight:900; font-size:.9rem; }
-.nav-links { display:flex; align-items:center; gap:1.1rem; }
-.nav-item { color:var(--text-primary); text-decoration:none; font-size:.78rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; transition:color .15s ease; }
-.btn-primary-nav { padding:.45rem 1rem; font-size:.68rem; }
+.logo:hover { color:var(--accent-purple); }
+.logo-with-avatar .nav-avatar { width:30px; height:30px; border-radius:999px; object-fit:cover; border:2px solid var(--accent-purple); }
+.logo .dot { color:var(--accent-purple); font-weight:900; font-size:1rem; }
+.logo-text { background:linear-gradient(135deg,#ffffff,var(--accent-purple) 55%,var(--accent-teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.nav-links { display:flex; align-items:center; gap:1.5rem; }
+.nav-item { color:var(--text-primary); text-decoration:none; font-size:.85rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; transition:color .15s ease; }
+.nav-item:hover { color:var(--accent-purple); }
+.mobile-toggle { display:none; }
+.mobile-nav { display:none; }
+.btn-primary-nav { padding:.55rem 1.4rem; font-size:.7rem; }
 @media (max-width:820px) {
   .nav-links { display:none; }
   .mobile-toggle { display:block; }
