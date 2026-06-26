@@ -126,20 +126,18 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      {isOpen && (
-        <div className="mobile-nav">
-          <div className="mobile-nav-content">
-            {['Works', 'Services', 'About', 'Process', 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="mobile-item">
-                {item}
-              </a>
-            ))}
-            <a href="#contact" onClick={() => setIsOpen(false)} className="btn btn-primary" style={{ width: '100%' }}>
-              HIRE ME
+      <div className="mobile-nav" data-open={isOpen ? '1' : '0'} aria-hidden={isOpen}>
+        <div className="mobile-nav-content">
+          {['Works', 'Services', 'About', 'Process', 'Contact'].map((item) => (
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="mobile-item">
+              {item}
             </a>
-          </div>
+          ))}
+          <a href="#contact" onClick={() => setIsOpen(false)} className="btn btn-primary" style={{ width: '100%' }}>
+            HIRE ME
+          </a>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

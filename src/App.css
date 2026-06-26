@@ -58,7 +58,8 @@ section > .container, .premium-footer > .container { position:relative; z-index:
   .nav-links { display:none; }
   .mobile-toggle { display:block; }
   .toggle-btn { background:none; border:none; color:var(--text-primary); cursor:pointer; }
-  .mobile-nav { position:fixed; inset:0; background:rgba(0,0,0,.98); z-index:110; padding:6rem 2rem 2rem; }
+  .mobile-nav { position:absolute; left:0; right:0; top:100%; background:rgba(10,10,10,.98); border-bottom:1px solid rgba(255,255,255,.08); padding:1.25rem 2rem 2rem; transition:max-height .25s ease, opacity .2s ease, padding .2s ease; max-height:0; opacity:0; overflow:hidden; pointer-events:none; }
+  .mobile-nav[data-open="1"] { max-height:420px; opacity:1; pointer-events:auto; }
   .mobile-nav-content { display:flex; flex-direction:column; gap:2.5rem; }
   .mobile-item { color:var(--text-primary); text-decoration:none; font-size:1.1rem; font-weight:600; }
 }
