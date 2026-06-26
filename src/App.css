@@ -99,8 +99,9 @@ section > .container, .premium-footer > .container { position:relative; z-index:
 .tab-btn.active { background:linear-gradient(135deg,var(--accent-purple),var(--accent-teal)); color:#050505; border-color:transparent; }
 .portfolio-grid-premium { display:grid; grid-template-columns:repeat(12,1fr); gap:1.1rem; }
 .portfolio-item.full-width { grid-column:span 12; }
-.portfolio-item { grid-column:span 6; }
+.portfolio-item { grid-column:span 3; }
 @media (max-width:900px) { .portfolio-item { grid-column:span 12; } .portfolio-item.full-width { grid-column:span 12; } }
+@media (min-width:901px) { .portfolio-item.full-width { grid-column:span 12; } }
 
 .project-card { position:relative; border-radius:14px; overflow:hidden; background:var(--bg-secondary); border:1px solid rgba(167,139,250,.14); width:100%; transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; box-shadow:0 14px 40px rgba(0,0,0,.55); }
 .project-card:not(.active):hover { border-color:rgba(167,139,250,.38); box-shadow:0 24px 70px rgba(167,139,250,.14); transform:translateY(-6px); }
