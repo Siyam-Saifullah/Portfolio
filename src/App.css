@@ -13,7 +13,10 @@ body {
   background:var(--bg-main); color:var(--text-primary); line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-.container { width:100%; max-width:1320px; margin:0 auto; padding:0 2rem; }
+.container { width:100%; max-width:1320px; margin:0 auto; padding:0 1.25rem; }
+@media (max-width:600px) {
+  .container { padding:0 1rem; }
+}
 .app-wrapper { min-height:100vh; background-color:var(--bg-main); position:relative; }
 
 section, .premium-footer { position:relative; isolation:isolate; overflow:hidden; }
