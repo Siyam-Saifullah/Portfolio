@@ -131,13 +131,6 @@ const Navbar = () => {
           <img src={profileImg} alt="Siyam Saifullah - Video Editor" className="nav-avatar" loading="lazy" />
           <span className="logo-text">SIYAM SAIFULLAH</span><span className="dot">.</span>
         </a>
-        <div className="nav-links">
-          {['Works', 'Services', 'About', 'Process', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="nav-item">
-              {item}
-            </a>
-          ))}
-        </div>
         <div className="mobile-toggle">
           <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="toggle-btn">
             {isOpen ? <X size={18} /> : <Menu size={18} />}
