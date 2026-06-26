@@ -102,6 +102,27 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClick = (e) => {
+      const nav = document.querySelector('.navbar');
+      const menu = document.querySelector('.mobile-nav');
+      const toggle = document.querySelector('.mobile-toggle');
+      if (!nav || !menu || !toggle) return;
+      if (menu.contains(e.target) || toggle.contains(e.target)) return;
+      setIsOpen(false);
+    };
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('pointerdown', handleClick);
+    document.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('pointerdown', handleClick);
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [isOpen]);
+
   return (
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-progress-line" style={{ transform: `scaleX(${scrollYProgress})` }} />
