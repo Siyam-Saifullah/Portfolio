@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { 
   Play, 
@@ -7,14 +7,10 @@ import {
   Smartphone, 
   Mic2, 
   Mail, 
-  ChevronRight, 
   Menu, 
   X, 
-  Sparkles, 
   ArrowRight,
   Scissors,
-  AudioLines,
-  Star,
   CheckCircle2,
   Zap
 } from 'lucide-react';
@@ -22,21 +18,6 @@ import './App.css';
 
 import profileImg from './assets/profile.jpg';
 import heroProfileImg from './assets/hero-profile.png';
-
-// ==========================================================================
-// PREMIUM VIDEO EDITING TIMELINE MARKER
-// ==========================================================================
-const TimelineMarker = ({ time, delay }) => (
-  <motion.div
-    initial={{ opacity: 0, scaleY: 0 }}
-    animate={{ opacity: 1, scaleY: 1 }}
-    transition={{ delay, duration: 0.5 }}
-    className="timeline-marker"
-  >
-    <div className="marker-line" />
-    <div className="marker-label">{time}</div>
-  </motion.div>
-);
 
 // ==========================================================================
 // 1. PAGE LOADER - FILM REEL STYLE
@@ -357,10 +338,10 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
       videoRef.current.muted = false;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
+        playPromise.catch(() => {
           if (videoRef.current) {
             videoRef.current.muted = true;
-            videoRef.current.play().catch(e => {});
+            videoRef.current.play().catch(() => {});
           }
         });
       }
@@ -369,7 +350,9 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
       videoRef.current.muted = true;
       try {
         videoRef.current.currentTime = 0;
-      } catch (err) {}
+      } catch {
+        // Some browsers block seeking while media is unloading.
+      }
     }
   }, [isActive]);
 
@@ -386,7 +369,7 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.6 }}
-      whileHover={{ y: -8 }}
+      whileHover={isActive ? undefined : { y: -8 }}
       className={`${cardClass} ${isActive ? 'active' : ''}`}
       onClick={handleCardClick}
       style={{ cursor: isActive ? 'default' : 'pointer' }}
@@ -400,21 +383,6 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
           onError={(e) => { e.target.style.display = 'none'; }}
         />
 
-        {!isActive && (
-          <div className="card-title-strip">
-            <span>{title}</span>
-          </div>
-        )}
-        
-        {/* TIMELINE VISUALIZATION */}
-        {!isActive && (
-          <div className="timeline-overlay">
-            <TimelineMarker time="00:00" delay={0} />
-            <TimelineMarker time="01:00" delay={0.1} />
-            <TimelineMarker time="02:00" delay={0.2} />
-          </div>
-        )}
-        
         {!isActive && (
           <motion.div 
             className="play-btn-overlay premium-play-btn"
@@ -442,6 +410,7 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             allowFullScreen
+            loading="lazy"
             title={title}
           />
         )}
