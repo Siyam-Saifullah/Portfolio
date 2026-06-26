@@ -293,7 +293,6 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
 
 const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
-  const [activeTab, setActiveTab] = useState('talking');
 
   const projects = [
     { title: 'Duration', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', aspect: 'landscape' },
@@ -308,33 +307,22 @@ const Portfolio = () => {
   return (
     <section id="works" className="portfolio-section premium-portfolio">
       <div className="container">
-        <div className="section-header premium-header">
-          <div>
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">PORTFOLIO SHOWCASE</span>
-            <h2 className="section-title premium-title">MY BEST WORK</h2>
-          </div>
-          <div className="portfolio-tabs premium-tabs">
-            <button type="button" className={`tab-btn ${activeTab === 'talking' ? 'active' : ''}`} onClick={() => setActiveTab('talking')}>
-              <Scissors size={14} /> CINEMATIC
-            </button>
-            <button type="button" className={`tab-btn ${activeTab === 'shorts' ? 'active' : ''}`} onClick={() => setActiveTab('shorts')}>
-              <Zap size={14} /> SHORTS
-            </button>
-          </div>
+        <div className="section-header-centered premium-header" style={{ marginBottom: '2.2rem' }}>
+          <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">PORTFOLIO SHOWCASE</span>
+          <h2 className="section-title premium-title">MY BEST WORK</h2>
+          <p className="section-subtitle-text">Cinematic edits and short-form work, shown together.</p>
         </div>
         <div className="portfolio-grid-premium">
-          {projects
-            .filter((p) => activeTab === 'talking' ? p.aspect === 'landscape' : p.aspect === 'vertical')
-            .map((p) => (
-              <div key={p.title} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
-                <ProjectCard {...p} isActive={activeTitle === p.title} onPlay={() => setActiveTitle(p.title)} />
-                {activeTitle === p.title && (
-                  <div className="video-label premium-label">
-                    <h3>{p.title}</h3>
-                  </div>
-                )}
-              </div>
-            ))}
+          {projects.map((p) => (
+            <div key={p.title} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
+              <ProjectCard {...p} isActive={activeTitle === p.title} onPlay={() => setActiveTitle(p.title)} />
+              {activeTitle === p.title && (
+                <div className="video-label premium-label">
+                  <h3>{p.title}</h3>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
