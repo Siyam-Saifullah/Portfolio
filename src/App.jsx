@@ -174,7 +174,7 @@ const Navbar = () => {
       
       <div className="container nav-container">
         <a href="#" className="logo logo-with-avatar">
-          <img src={profileImg} alt="Siyam Saifullah" className="nav-avatar" />
+          <img src={profileImg} alt="Siyam Saifullah - Video Editor" className="nav-avatar" />
           <span className="logo-text">SIYAM SAIFULLAH</span><span className="dot">.</span>
         </a>
 
@@ -270,6 +270,7 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.3 }}
             className="hero-title premium-title"
           >
+            <span className="sr-only">Siyam Saifullah - Professional Video Editor & Motion Designer Portfolio</span>
             CUTS THAT
             <span className="accent-text">
               {' '}CAPTIVATE
@@ -319,7 +320,7 @@ const Hero = () => {
         >
           <div className="premium-frame">
             <div className="frame-border" />
-            <img src={heroProfileImg} alt="Siyam Saifullah" className="hero-image premium-image-img" />
+            <img src={heroProfileImg} alt="Siyam Saifullah - Professional Cinematic Video Editor" className="hero-image premium-image-img" />
             <div className="frame-accent" />
           </div>
           
@@ -393,10 +394,17 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
       <div className="card-image-wrapper premium-card-wrapper">
         <img 
           src={image} 
-          alt={title} 
+          alt={`${title} - Video Editing by Siyam Saifullah`}
           className="card-image premium-card-image"
           style={{ opacity: isActive ? 0 : 1, transition: 'opacity 0.3s ease' }}
+          onError={(e) => { e.target.style.display = 'none'; }}
         />
+
+        {!isActive && (
+          <div className="card-title-strip">
+            <span>{title}</span>
+          </div>
+        )}
         
         {/* TIMELINE VISUALIZATION */}
         {!isActive && (
@@ -447,6 +455,24 @@ const Portfolio = () => {
   const [activeTab, setActiveTab] = useState('talking');
 
   const projects = [
+    { 
+      title: "Cinematic Edit 01", 
+      image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1204735353?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "landscape",
+    },
+    { 
+      title: "Cinematic Edit 02", 
+      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1204735897?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "landscape",
+    },
+    { 
+      title: "Cinematic Edit 03", 
+      image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000",
+      iframeSrc: "https://player.vimeo.com/video/1204735897?badge=0&autopause=0&player_id=0&app_id=58479",
+      aspect: "landscape",
+    },
     { 
       title: "Cinematic Brand Edit", 
       image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=1000",
@@ -705,7 +731,7 @@ const About = () => {
           >
             <div className="about-profile-card premium-profile">
               <div className="profile-frame">
-                <img src={profileImg} alt="Siyam Saifullah" className="about-profile-img" />
+                <img src={profileImg} alt="Siyam Saifullah - Video Editor & Motion Designer" className="about-profile-img" />
               </div>
               <div className="about-profile-info">
                 <h3>Siyam Saifullah</h3>
@@ -877,7 +903,7 @@ const Footer = () => {
           viewport={{ once: false }}
           transition={{ duration: 0.5 }}
         >
-          <img src={profileImg} alt="Siyam" className="footer-avatar" />
+          <img src={profileImg} alt="Siyam Saifullah - Video Editor" className="footer-avatar" />
           <div className="logo logo-small">
             SIYAM SAIFULLAH<span className="dot">.</span>
           </div>

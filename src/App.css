@@ -786,6 +786,33 @@ section > .container,
   filter: brightness(0.85) contrast(1.05) grayscale(0%);
 }
 
+.card-title-strip {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  display: flex;
+  pointer-events: none;
+}
+
+.card-title-strip span {
+  max-width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(223, 199, 167, 0.28);
+  border-radius: 6px;
+  background: rgba(5, 5, 5, 0.68);
+  color: #f8f0e6;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  backdrop-filter: blur(12px);
+}
+
 /* TIMELINE VISUALIZATION */
 .timeline-overlay {
   position: absolute;
@@ -1598,4 +1625,19 @@ section > .container,
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+/* ============================================================================
+   SEO UTILITY
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
