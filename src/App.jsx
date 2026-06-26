@@ -277,7 +277,7 @@ const Portfolio = () => {
   const [activeTab, setActiveTab] = useState('talking');
 
   const projects = [
-    { title: 'Duration', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/3H6Ol5_FOfE', aspect: 'landscape' },
+    { title: 'Duration', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', aspect: 'landscape' },
     { title: 'Editing', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/gNZN6h7EBTM', aspect: 'landscape' },
     { title: 'Style', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/XWvZdVAXV8I', aspect: 'landscape' },
     { title: 'Commercial Editorial', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/8S53A04UCNk', aspect: 'vertical' },
