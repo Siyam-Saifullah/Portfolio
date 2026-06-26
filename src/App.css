@@ -40,7 +40,7 @@ section > .container, .premium-footer > .container { position:relative; z-index:
 .loader-progress-bar { height:100%; background:linear-gradient(90deg,#a78bfa,#14b8a6); box-shadow:0 0 10px rgba(167,139,250,.35); transition:width .08s linear; width:0; }
 .loader-percentage { display:block; text-align:right; font-size:.85rem; color:#a78bfa; letter-spacing:.15em; margin-top:.6rem; }
 
-.navbar { position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:blur(14px); background:rgba(10,10,10,.4); border-bottom:1px solid rgba(255,255,255,.04); transition:background .2s ease,border-color .2s ease,backdrop-filter .2s ease,box-shadow .2s ease; }
+.navbar { position:fixed; top:0; left:0; right:0; z-index:1000; backdrop-filter:blur(14px); background:rgba(10,10,10,.4); border-bottom:1px solid rgba(255,255,255,.04); transition:background .2s ease,border-color .2s ease,backdrop-filter .2s ease,box-shadow .2s ease; }
 .navbar-scrolled { border-bottom-color:rgba(167,139,250,.18); box-shadow:0 10px 40px rgba(0,0,0,.75); backdrop-filter:blur(20px); background:rgba(10,10,10,.55); }
 .navbar-progress-line { position:absolute; top:0; left:0; height:2px; background:linear-gradient(90deg,var(--accent-purple),var(--accent-teal)); transform-origin:left; }
 .nav-container { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 0; }
@@ -58,9 +58,9 @@ section > .container, .premium-footer > .container { position:relative; z-index:
   .nav-links { display:none; }
   .mobile-toggle { display:block; }
   .toggle-btn { background:none; border:none; color:var(--text-primary); cursor:pointer; }
-  .mobile-nav { position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:110; padding:6rem 2rem 2rem; }
-  .mobile-nav-content { display:flex; flex-direction:column; gap:1.5rem; }
-  .mobile-item { color:var(--text-primary); text-decoration:none; font-size:1rem; font-weight:600; }
+  .mobile-nav { position:fixed; inset:0; background:rgba(0,0,0,.98); z-index:110; padding:6rem 2rem 2rem; }
+  .mobile-nav-content { display:flex; flex-direction:column; gap:2.5rem; }
+  .mobile-item { color:var(--text-primary); text-decoration:none; font-size:1.1rem; font-weight:600; }
 }
 
 .hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:6.5rem 0 4rem; background:linear-gradient(135deg,#080808 0%,#101018 50%,#080808 100%); }
