@@ -142,7 +142,7 @@ const Navbar = () => {
           </a>
         </div>
         <div className="mobile-toggle">
-          <button onClick={() => setIsOpen(!isOpen)} className="toggle-btn">
+          <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="toggle-btn">
             {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
