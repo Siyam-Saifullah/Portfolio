@@ -137,9 +137,6 @@ const Navbar = () => {
               {item}
             </a>
           ))}
-          <a href="#contact" className="btn btn-primary btn-primary-nav">
-            HIRE ME
-          </a>
         </div>
         <div className="mobile-toggle">
           <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="toggle-btn">
@@ -154,9 +151,6 @@ const Navbar = () => {
               {item}
             </a>
           ))}
-          <a href="#contact" onClick={() => setIsOpen(false)} className="btn btn-primary" style={{ width: '100%' }}>
-            HIRE ME
-          </a>
         </div>
       </div>
     </nav>
@@ -294,36 +288,45 @@ const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPl
 const Portfolio = () => {
   const [activeTitle, setActiveTitle] = useState(null);
 
-  const projects = [
+  const cinematicProjects = [
     { title: 'Duration', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', aspect: 'landscape' },
     { title: 'Editing', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/gNZN6h7EBTM', aspect: 'landscape' },
     { title: 'Style', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/XWvZdVAXV8I', aspect: 'landscape' },
+  ];
+
+  const shortProjects = [
     { title: 'Vertical Short Edit 01', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/a7saLfE73_Y', aspect: 'vertical' },
     { title: 'Vertical Short Edit 02', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/ZKJ36Pu3o78', aspect: 'vertical' },
     { title: 'Vertical Short Edit 03', image: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/KxLkb1rH0Qg', aspect: 'vertical' },
     { title: 'Vertical Short Edit 04', image: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/5OrsIIRBWxQ', aspect: 'vertical' },
   ];
 
+  const renderGroup = (label, items) => (
+    <>
+      <div className="section-header-centered premium-header" style={{ marginBottom: '1.6rem' }}>
+        <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">{label}</span>
+      </div>
+      <div className="portfolio-grid-premium">
+        {items.map((p) => (
+          <div key={p.title} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
+            <ProjectCard {...p} isActive={activeTitle === p.title} onPlay={() => setActiveTitle(p.title)} />
+            {activeTitle === p.title && (
+              <div className="video-label premium-label">
+                <h3>{p.title}</h3>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="section-divider" />
+    </>
+  );
+
   return (
     <section id="works" className="portfolio-section premium-portfolio">
       <div className="container">
-        <div className="section-header-centered premium-header" style={{ marginBottom: '2.2rem' }}>
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">PORTFOLIO SHOWCASE</span>
-          <h2 className="section-title premium-title">MY BEST WORK</h2>
-          <p className="section-subtitle-text">Cinematic edits and short-form work, shown together.</p>
-        </div>
-        <div className="portfolio-grid-premium">
-          {projects.map((p) => (
-            <div key={p.title} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
-              <ProjectCard {...p} isActive={activeTitle === p.title} onPlay={() => setActiveTitle(p.title)} />
-              {activeTitle === p.title && (
-                <div className="video-label premium-label">
-                  <h3>{p.title}</h3>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        {renderGroup('CINEMATIC', cinematicProjects)}
+        {renderGroup('SHORTS', shortProjects)}
       </div>
     </section>
   );
