@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useScroll } from 'framer-motion';
-import { Play, Video, Layers, Smartphone, Mic2, Mail, Menu, X, ArrowRight, Scissors, CheckCircle2, Zap } from 'lucide-react';
+import { Play, Video, Smartphone, Zap, BarChart2, Clock, PlayCircle } from 'lucide-react';
 import './App.css';
 
 import profileImg from './assets/profile.webp';
-import heroProfileImg from './assets/hero-profile.webp';
 
 const Loader = ({ onComplete }) => {
   const [percent, setPercent] = useState(0);
@@ -44,57 +42,19 @@ const Loader = ({ onComplete }) => {
     <div className={`loader-container ${hidden ? 'is-hidden' : ''}`}>
       <div className="loader-inner">
         <div className="loader-logo">
-          <div className="film-reel">
-            <Scissors size={32} />
-          </div>
-          <span>editing in progress</span>
+          <span>Siyam Saifullah</span>
         </div>
         <div className="loader-progress-track">
           <div className="loader-progress-bar" style={{ width: `${percent}%` }} />
         </div>
-        <span className="loader-percentage">{Math.round(percent)}%</span>
       </div>
     </div>
   );
 };
 
-const Counter = ({ value, duration = 1.5 }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !isInView.current) {
-        isInView.current = true;
-        const end = parseInt(value.replace(/[^0-9]/g, '')) || 0;
-        if (end === 0) return;
-        const intervalTime = Math.max(Math.floor((duration * 1000) / end), 15);
-        const timer = setInterval(() => {
-          setCount((c) => {
-            const next = c + 1;
-            if (next >= end) {
-              clearInterval(timer);
-              return end;
-            }
-            return next;
-          });
-        }, intervalTime);
-      }
-    }, { threshold: 0.2 });
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value, duration]);
-
-  const suffix = value.replace(/[0-9]/g, '');
-  return <span ref={ref} className="stat-num">{count}{suffix}</span>;
-};
-
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -102,317 +62,238 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClick = (e) => {
-      const nav = document.querySelector('.navbar');
-      const menu = document.querySelector('.mobile-nav');
-      const toggle = document.querySelector('.mobile-toggle');
-      if (!nav || !menu || !toggle) return;
-      if (menu.contains(e.target) || toggle.contains(e.target)) return;
-      setIsOpen(false);
-    };
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') setIsOpen(false);
-    };
-    document.addEventListener('pointerdown', handleClick);
-    document.addEventListener('keydown', handleEsc);
-    return () => {
-      document.removeEventListener('pointerdown', handleClick);
-      document.removeEventListener('keydown', handleEsc);
-    };
-  }, [isOpen]);
-
   return (
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <div className="navbar-progress-line" style={{ transform: `scaleX(${scrollYProgress})` }} />
       <div className="container nav-container">
-        <a href="#" className="logo logo-with-avatar">
-          <img src={profileImg} alt="Siyam Saifullah - Video Editor" className="nav-avatar" loading="lazy" />
-          <span className="logo-text">SIYAM SAIFULLAH</span><span className="dot">.</span>
+        <a href="#" className="logo">
+          <img src={profileImg} alt="Siyam Saifullah" className="nav-avatar" />
+          SIYAM SAIFULLAH
         </a>
-        <div className="mobile-toggle">
-          <button onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }} className="toggle-btn">
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
+        <div className="nav-links">
+          <a href="#work" className="nav-item">Work</a>
+          <a href="#process" className="nav-item">Process</a>
+          <a href="#services" className="nav-item">Services</a>
         </div>
+        <a href="#contact" className="btn-primary-nav">Hire Me</a>
+        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
+          <MenuIcon />
+        </button>
       </div>
-      <div className="mobile-nav" data-open={isOpen ? '1' : '0'} aria-hidden={isOpen}>
-        <div className="mobile-nav-content">
-          {['Works', 'Services', 'About', 'Process', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="mobile-item">
-              {item}
-            </a>
-          ))}
-        </div>
+      
+      {/* Mobile Nav */}
+      <div className="mobile-nav" data-open={isOpen ? '1' : '0'}>
+        <a href="#work" className="mobile-item" onClick={() => setIsOpen(false)}>Work</a>
+        <a href="#process" className="mobile-item" onClick={() => setIsOpen(false)}>Process</a>
+        <a href="#services" className="mobile-item" onClick={() => setIsOpen(false)}>Services</a>
+        <a href="#contact" className="mobile-item" onClick={() => setIsOpen(false)}>Contact</a>
       </div>
     </nav>
   );
 };
 
+const MenuIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+);
+
 const Hero = () => {
   return (
     <section className="hero">
-      <div className="hero-bg-grid" />
-      <div className="hero-layout">
+      <div className="container hero-layout animate-fade-up">
         <div className="hero-text-content">
-          <div className="badge premium-badge">
-            <Zap size={12} style={{ color: '#a78bfa' }} />
-            <span>PREMIUM VIDEO EDITOR</span>
+          <div className="hero-avatar-wrapper animate-fade-up" style={{ marginBottom: '1.5rem' }}>
+            <img src={profileImg} alt="Siyam Saifullah" className="hero-avatar-large" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--accent)' }} />
           </div>
-          <h1 className="hero-title premium-title">
-            <span className="sr-only">Siyam Saifullah - Professional Video Editor & Motion Designer Portfolio</span>
-            CUTS THAT
-            <span className="accent-text"> CAPTIVATE</span>
-            <br />& CONVERT
+          <h1 className="hero-title">
+            Content that <br />
+            <span className="accent-text">commands</span> attention.
           </h1>
-          <p className="hero-subtitle premium-subtitle">
-            Professional video editing that transforms raw footage into scroll-stopping content. Cinematic pacing, premium sound design, and
-            pixel-perfect timing.
+          <p className="hero-subtitle">
+            I am a Video Editor. I help creators and brands increase retention through modern pacing, storytelling, and premium editing across short-form, talking heads, and long-form content.
           </p>
           <div className="hero-actions">
-            <a href="#works" className="btn btn-primary btn-large premium-btn">
-              <Play size={14} fill="currentColor" /> VIEW PORTFOLIO
+            <a href="#work" className="btn btn-primary">
+              <PlayCircle size={20} /> Watch Showreel
             </a>
-            <a href="#contact" className="btn btn-glass btn-large premium-btn">
-              <Zap size={14} /> START PROJECT
+            <a href="#contact" className="btn btn-secondary">
+              Hire Me
             </a>
           </div>
         </div>
-        <div className="hero-image-wrapper premium-image">
-          <div className="premium-frame">
-            <div className="frame-border" />
-            <img src={heroProfileImg} alt="Siyam Saifullah - Professional Cinematic Video Editor" className="hero-image premium-image-img" decoding="async" />
-            <div className="frame-accent" />
-          </div>
-          <div className="experience-badge">
-            <div className="badge-content">
-              <span className="years">2+</span>
-              <span className="label">Years<br />Experience</span>
-            </div>
-          </div>
+        <div className="hero-image-wrapper">
+          <iframe 
+            src="https://player.vimeo.com/video/1209555182?api=1&title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1&amp;muted=0" 
+            className="hero-video-reel scroll-auto-video"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            frameBorder="0"
+            title="Timeline 1"
+          />
         </div>
-      </div>
-      <div className="scroll-indicator">
-        <div className="scroll-line" />
-        <span className="scroll-text">SCROLL TO DISCOVER</span>
       </div>
     </section>
   );
 };
 
-const ProjectCard = ({ title, image, videoUrl, iframeSrc, aspect, isActive, onPlay }) => {
-  const videoRef = useRef(null);
+const SocialProof = () => {
+  return (
+    <section className="social-proof">
+      <div className="container">
+        <div className="stats-grid">
+          <div className="stat-item">
+            <span className="stat-num">10M+</span>
+            <span className="stat-label">Views Generated</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num">500+</span>
+            <span className="stat-label">Videos Edited</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num">30+</span>
+            <span className="stat-label">Happy Clients</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num">48h</span>
+            <span className="stat-label">Avg Turnaround</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-  useEffect(() => {
-    if (isActive && videoRef.current) {
-      videoRef.current.muted = false;
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.play().catch(() => {});
-          }
-        });
-      }
-    } else if (!isActive && videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.muted = true;
-      try {
-        videoRef.current.currentTime = 0;
-      } catch {
-        // ignore
-      }
-    }
-  }, [isActive]);
+const ClientReview = () => {
+  return (
+    <section className="client-review-section" style={{ padding: '4rem 0', background: 'var(--bg-secondary)' }}>
+      <div className="container">
+        <div className="section-header-centered animate-fade-up">
+          <h2 className="section-title">Client Review</h2>
+          <p className="section-subtitle-text">Hear directly from the creators I work with.</p>
+        </div>
+        <div className="review-video-wrapper" style={{ maxWidth: '800px', margin: '0 auto', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/9' }}>
+          <iframe 
+            className="scroll-auto-video"
+            width="100%" 
+            height="100%" 
+            src="https://www.youtube-nocookie.com/embed/xvLJ-11R-dU?enablejsapi=1&rel=0&modestbranding=1" 
+            title="Client Testimonial for Siyam Saifullah" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerPolicy="strict-origin-when-cross-origin" 
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-  const handleCardClick = () => {
-    if (isActive) return;
-    onPlay();
-  };
-
-  const cardClass = aspect === 'vertical' ? 'project-card card-vertical' : 'project-card card-landscape';
+const ProjectCard = ({ title, category, image, iframeSrc, isVertical }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div
-      className={`${cardClass} ${isActive ? 'active' : ''}`}
-      onClick={handleCardClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') handleCardClick();
-      }}
-      style={{ cursor: isActive ? 'default' : 'pointer', display: isActive ? 'block' : 'block' }}
+    <div 
+      className={`portfolio-item ${isVertical ? 'vertical' : ''}`}
+      onClick={() => setIsPlaying(true)}
     >
-      <div className="card-image-wrapper premium-card-wrapper">
-        <img src={image} alt={`${title} - Video Editing by Siyam Saifullah`} className="card-image premium-card-image" style={{ opacity: isActive ? 0 : 1, transition: 'opacity .3s ease' }} decoding="async" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
-
-        {!isActive && (
-          <div className="premium-play-btn" aria-hidden="true">
-            <Play size={24} fill="currentColor" />
+      {!isPlaying && (
+        <>
+          <img src={image} alt={title} className="card-image" loading="lazy" />
+          <div className="play-btn-overlay">
+            <div className="play-icon-circle">
+              <Play size={24} fill="currentColor" />
+            </div>
           </div>
-        )}
-
-        {isActive && !iframeSrc && (
-          <video ref={videoRef} src={videoUrl} loop playsInline controls className="card-video-preview" />
-        )}
-        {isActive && iframeSrc && (
-          <iframe
-            src={`${iframeSrc}?autoplay=1&loop=1&playlist=${iframeSrc.split('/').pop()}&controls=1&showinfo=0&rel=0&modestbranding=1`}
-            className="card-video-preview"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-            title={title}
-          />
-        )}
-      </div>
-      {isActive && (
-        <div className="video-label premium-label">
-          <h3>{title}</h3>
-        </div>
+          <div className="video-label">
+            <span className="video-category">{category}</span>
+            <h3>{title}</h3>
+          </div>
+        </>
+      )}
+      
+      {isPlaying && (
+        <iframe
+          src={`${iframeSrc}?autoplay=1&rel=0&modestbranding=1`}
+          className="card-video-preview"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title={title}
+        />
       )}
     </div>
   );
 };
 
-const Portfolio = () => {
-  const [activeTitle, setActiveTitle] = useState(null);
-
-  const cinematicProjects = [
-    { title: 'Duration', image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', aspect: 'landscape' },
-    { title: 'Editing', image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/gNZN6h7EBTM', aspect: 'landscape' },
-    { title: 'Style', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/XWvZdVAXV8I', aspect: 'landscape' },
+const FeaturedWork = () => {
+  const shortFormProjects = [
+    { title: 'Educational Short', category: 'Shorts', image: 'https://img.youtube.com/vi/a7saLfE73_Y/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/a7saLfE73_Y', isVertical: true },
+    { title: 'Tech Review Reel', category: 'Reels', image: 'https://img.youtube.com/vi/ZKJ36Pu3o78/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/ZKJ36Pu3o78', isVertical: true },
+    { title: 'Podcast Clip', category: 'Shorts', image: 'https://img.youtube.com/vi/KxLkb1rH0Qg/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/KxLkb1rH0Qg', isVertical: true },
+    { title: 'Vlog Highlight', category: 'Reels', image: 'https://img.youtube.com/vi/5OrsIIRBWxQ/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/5OrsIIRBWxQ', isVertical: true },
   ];
 
-  const shortProjects = [
-    { title: 'Vertical Short Edit 01', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/a7saLfE73_Y', aspect: 'vertical' },
-    { title: 'Vertical Short Edit 02', image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/ZKJ36Pu3o78', aspect: 'vertical' },
-    { title: 'Vertical Short Edit 03', image: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/KxLkb1rH0Qg', aspect: 'vertical' },
-    { title: 'Vertical Short Edit 04', image: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?auto=format&fit=crop&w=1000&q=80', iframeSrc: 'https://www.youtube-nocookie.com/embed/5OrsIIRBWxQ', aspect: 'vertical' },
-  ];
-
-  const renderGroup = (label, items) => (
-    <>
-      <div className="section-header-centered premium-header" style={{ marginBottom: '1.6rem' }}>
-        <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">{label}</span>
-      </div>
-      <div className="portfolio-grid-premium">
-        {items.map((p) => (
-          <div key={p.title} className={p.aspect === 'landscape' ? 'portfolio-item full-width' : 'portfolio-item'}>
-            <ProjectCard {...p} isActive={activeTitle === p.title} onPlay={() => setActiveTitle(p.title)} />
-            {activeTitle === p.title && (
-              <div className="video-label premium-label">
-                <h3>{p.title}</h3>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="section-divider" />
-    </>
-  );
-
-  return (
-    <section id="works" className="portfolio-section premium-portfolio">
-      <div className="container">
-        {renderGroup('CINEMATIC', cinematicProjects)}
-        {renderGroup('SHORTS', shortProjects)}
-      </div>
-    </section>
-  );
-};
-
-const Services = () => {
-  const services = [
-    { icon: <Video size={24} />, title: 'Full Video Editing', desc: 'Complete editorial assembly, pacing optimization, and professional color grading.', tags: ['DaVinci Resolve', 'Premiere'] },
-    { icon: <Layers size={24} />, title: 'Motion Graphics', desc: 'Custom animations, dynamic titles, and visual effects that enhance your story.', tags: ['After Effects', 'Motion'] },
-    { icon: <Smartphone size={24} />, title: 'Short-Form Content', desc: 'Instagram Reels, TikTok, and YouTube Shorts optimized for maximum engagement.', tags: ['Vertical Video', 'Social'] },
-    { icon: <Mic2 size={24} />, title: 'Audio Engineering', desc: 'Professional sound design, mixing, and audio cleanup for pristine results.', tags: ['Fairlight', 'Mixing'] },
-    { icon: <Scissors size={24} />, title: 'Podcast Editing', desc: 'Full podcast production, silence removal, and professional mastering.', tags: ['Podcast', 'Audio'] },
-    { icon: <Zap size={24} />, title: 'Ads & VSL', desc: 'High-converting video sales letters and performance-focused ad creatives.', tags: ['Advertising', 'VSL'] },
+  const longFormProjects = [
+    { title: 'Brand Documentary', category: 'Documentary', image: 'https://img.youtube.com/vi/gNZN6h7EBTM/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/gNZN6h7EBTM', isVertical: false },
+    { title: 'Talking Head Series', category: 'Talking Heads', image: 'https://img.youtube.com/vi/nvk7W27hkkg/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', isVertical: false },
+    { title: 'Siyam Saifullah - Professional Video Editing Workflow', category: 'Long Form', image: 'https://img.youtube.com/vi/XWvZdVAXV8I/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/XWvZdVAXV8I', isVertical: false },
   ];
 
   return (
-    <section id="services" className="services-section premium-services">
+    <section id="work" className="portfolio-section">
       <div className="container">
-        <div className="section-header-centered premium-header">
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">SERVICES</span>
-          <h2 className="section-title premium-title">WHAT I CREATE</h2>
-          <p className="section-subtitle-text">Professional editing services tailored to elevate your content.</p>
+        <div className="section-header-centered animate-fade-up">
+          <h2 className="section-title">Selected Works</h2>
+          <p className="section-subtitle-text">The portfolio is the product. See the impact of premium editing.</p>
         </div>
-        <div className="services-grid premium-grid">
-          {services.map((s, i) => (
-            <div key={i} className="service-card premium-service-card">
-              <div className="service-icon-wrapper premium-icon">{s.icon}</div>
-              <h3 className="service-card-title">{s.title}</h3>
-              <p className="service-card-desc">{s.desc}</p>
-              <div className="service-tags">
-                {s.tags.map((tag, ti) => (
-                  <span key={ti} className="service-tag premium-tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+        
+        <div className="category-block">
+          <div className="category-header">
+            <h3>Short-Form (Reels, Shorts, TikTok)</h3>
+          </div>
+          <div className="grid-vertical">
+            {shortFormProjects.map((p, i) => (
+              <ProjectCard key={i} {...p} />
+            ))}
+          </div>
+        </div>
+
+        <div className="category-block">
+          <div className="category-header">
+            <h3>Long-Form (Talking Heads, Documentary)</h3>
+          </div>
+          <div className="portfolio-grid">
+            {longFormProjects.map((p, i) => (
+              <ProjectCard key={i} {...p} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-const About = () => {
+const Results = () => {
   return (
-    <section id="about" className="about-section premium-about">
+    <section className="results-section">
       <div className="container">
-        <div className="about-grid">
-          <div className="about-content">
-            <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">ABOUT</span>
-            <h2 className="section-title premium-title">THE CRAFTSMAN</h2>
-            <p className="about-text">
-              I am a professional video editor obsessed with precision, pacing, and storytelling. Every cut, transition, and color grade is intentional.
-            </p>
-            <p className="about-text">
-              With DaVinci Resolve Studio mastery and years of experience, I transform raw footage into premium content that drives results.
-            </p>
-            <div className="about-checklist">
-              {['Expert in DaVinci Resolve Studio', 'Fast turnaround with quality assurance', 'Unlimited revisions included', 'Deliverables optimized for all platforms'].map((item, i) => (
-                <div key={i} className="check-item">
-                  <CheckCircle2 size={16} className="check-icon" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-            <div className="about-stats">
-              <div className="stat-item">
-                <Counter value="50+" />
-                <span className="stat-label">PROJECTS</span>
-              </div>
-              <div className="stat-item">
-                <Counter value="100%" />
-                <span className="stat-label">SATISFACTION</span>
-              </div>
-            </div>
+        <div className="section-header-centered animate-fade-up">
+          <h2 className="section-title">Client Outcomes</h2>
+          <p className="section-subtitle-text">Beyond just nice cuts, I focus on metrics that matter to your business.</p>
+        </div>
+        <div className="results-grid">
+          <div className="result-card">
+            <BarChart2 size={32} className="accent-text" style={{marginBottom: '1rem'}} />
+            <h3>Better Retention</h3>
+            <p>I build narrative arcs and visual hooks specifically engineered to stop the scroll and keep viewers engaged until the very end.</p>
           </div>
-          <div className="about-visual">
-            <div className="about-profile-card premium-profile">
-              <div className="profile-frame">
-                <img src={profileImg} alt="Siyam Saifullah - Video Editor & Motion Designer" className="about-profile-img" loading="lazy" />
-              </div>
-              <div className="about-profile-info">
-                <h3>Siyam Saifullah</h3>
-                <p>Video Editor & Motion Designer</p>
-                <div className="software-pills">
-                  <span className="pill">DaVinci</span>
-                  <span className="pill">After Effects</span>
-                  <span className="pill">Premiere</span>
-                  <span className="pill">Motion</span>
-                </div>
-              </div>
-            </div>
+          <div className="result-card">
+            <Clock size={32} className="accent-text" style={{marginBottom: '1rem'}} />
+            <h3>Faster Turnaround</h3>
+            <p>Reliable delivery timelines without sacrificing premium quality. Get your content ready for publishing exactly when you need it.</p>
           </div>
         </div>
       </div>
@@ -422,24 +303,25 @@ const About = () => {
 
 const Process = () => {
   const steps = [
-    { number: '01', title: 'Project Setup', desc: 'Organize assets, confirm specifications, and establish editing protocol.' },
-    { number: '02', title: 'Creative Editing', desc: 'Build narrative flow, apply effects, refine pacing with precision cuts.' },
-    { number: '03', title: 'Final Delivery', desc: 'Color grade, mix audio, export in all required formats.' },
+    { num: '01', title: 'Send Footage', desc: 'Upload your raw files and brief to a shared drive. Simple and frictionless.' },
+    { num: '02', title: 'Editing', desc: 'I assemble, pace, color grade, and sound design the first cut with precision.' },
+    { num: '03', title: 'Revisions', desc: 'Review the draft using frame-accurate feedback tools. We refine until perfect.' },
+    { num: '04', title: 'Delivery', desc: 'Receive the final high-res renders, optimized for your target platforms.' }
   ];
 
   return (
-    <section id="process" className="process-section premium-process">
+    <section id="process" className="process-section">
       <div className="container">
-        <div className="section-header-centered premium-header">
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[#a78bfa] uppercase">WORKFLOW</span>
-          <h2 className="section-title premium-title">HOW I WORK</h2>
+        <div className="section-header-centered animate-fade-up">
+          <h2 className="section-title">Streamlined Process</h2>
+          <p className="section-subtitle-text">A professional workflow designed to reduce client anxiety.</p>
         </div>
-        <div className="process-grid premium-process-grid">
+        <div className="process-grid">
           {steps.map((step, i) => (
-            <div key={i} className="process-item premium-process-item">
-              <span className="process-number premium-number">{step.number}</span>
-              <h3 className="process-item-title">{step.title}</h3>
-              <p className="process-item-desc">{step.desc}</p>
+            <div key={i} className="process-item">
+              <span className="process-number">{step.num}</span>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
             </div>
           ))}
         </div>
@@ -448,45 +330,63 @@ const Process = () => {
   );
 };
 
-const Contact = () => {
+const Services = () => {
   return (
-    <section id="contact" className="contact-section premium-contact">
-      <div className="container contact-container">
-        <div className="contact-card-premium">
-          <div className="contact-header-premium">
-            <span className="contact-label">READY TO COLLABORATE</span>
-            <h2 className="contact-title-premium">
-              Let's Create <span className="text-[#a78bfa]">Premium Content</span>
-            </h2>
+    <section id="services" className="services-section">
+      <div className="container">
+        <div className="section-header-centered animate-fade-up">
+          <h2 className="section-title">Specializations</h2>
+        </div>
+        <div className="services-grid">
+          <div className="service-card">
+            <Smartphone size={32} className="service-icon" />
+            <h3>Shorts Editing</h3>
+            <p>High-energy vertical content that drives organic growth and captures new audiences.</p>
+            <ul className="service-features">
+              <li>Dynamic Captions</li>
+              <li>Motion Graphics</li>
+              <li>Sound Design</li>
+            </ul>
           </div>
-          <div className="contact-content-premium">
-            <a href="mailto:siyamsaifullah@gmail.com" className="contact-email-link premium-link">
-              <Mail size={20} />
-              <div className="email-info">
-                <span className="email-label">Email</span>
-                <span className="email-value">siyamsaifullah@gmail.com</span>
-              </div>
-              <ArrowRight size={16} />
-            </a>
-            <div className="contact-divider" />
-            <div className="contact-socials-premium">
-              <span className="socials-label">Follow & Connect</span>
-              <div className="socials-grid-premium">
-                <a href="https://www.instagram.com/siyam_saifullah/?hl=en" className="social-link-premium" target="_blank" rel="noopener noreferrer">
-                  <span>Instagram</span>
-                </a>
-                <a href="https://www.linkedin.com/in/siyam-saifullah-739825406/" className="social-link-premium" target="_blank" rel="noopener noreferrer">
-                  <span>LinkedIn</span>
-                </a>
-                <a href="https://x.com/home" className="social-link-premium" target="_blank" rel="noopener noreferrer">
-                  <span>X</span>
-                </a>
-              </div>
-            </div>
+          <div className="service-card">
+            <Video size={32} className="service-icon" />
+            <h3>Talking Heads</h3>
+            <p>Educational and authority-building content crafted to maximize viewer watch time.</p>
+            <ul className="service-features">
+              <li>Retention Editing</li>
+              <li>Relevant B-Roll</li>
+              <li>Pacing & Zooms</li>
+            </ul>
           </div>
-          <div className="contact-footer-premium">
-            <p>Premium editing for creators and brands who demand excellence.</p>
+          <div className="service-card">
+            <Zap size={32} className="service-icon" />
+            <h3>AI Visuals</h3>
+            <p>Cutting-edge AI integration to tell stories that would otherwise be impossible.</p>
+            <ul className="service-features">
+              <li>AI Generated Sequences</li>
+              <li>Creative Concepts</li>
+              <li>Visual Storytelling</li>
+            </ul>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const CTA = () => {
+  return (
+    <section id="contact" className="cta-section">
+      <div className="container animate-fade-up">
+        <h2 className="cta-title">Need an editor who understands retention and storytelling?</h2>
+        <p className="section-subtitle-text">Let's build content people actually watch.</p>
+        <div className="cta-actions">
+          <a href="mailto:siyamsaifullah@gmail.com" className="btn btn-primary">
+            <Zap size={20} /> Book a Call
+          </a>
+          <a href="mailto:siyamsaifullah@gmail.com" className="btn btn-secondary">
+            Send a Message
+          </a>
         </div>
       </div>
     </section>
@@ -495,16 +395,13 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="footer premium-footer">
+    <footer className="footer">
       <div className="container footer-content">
-        <div className="footer-logo-wrap">
-          <img src={profileImg} alt="Siyam Saifullah - Video Editor" className="footer-avatar" loading="lazy" />
-          <div className="logo logo-small">SIYAM SAIFULLAH<span className="dot">.</span></div>
-        </div>
-        <div className="footer-info text-xs">&copy; {new Date().getFullYear()} Siyam Saifullah. Professional Video Editor.</div>
+        <div className="logo">SIYAM SAIFULLAH</div>
+        <div className="footer-copy">&copy; {new Date().getFullYear()} Video Editor. All rights reserved.</div>
         <div className="footer-links">
-          <a href="https://www.linkedin.com/in/siyam-saifullah-739825406/" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
-          <a href="https://www.instagram.com/siyam_saifullah/?hl=en" target="_blank" rel="noopener noreferrer" className="footer-link">Instagram</a>
+          <a href="https://instagram.com/siyam_saifullah/" target="_blank" rel="noreferrer" className="footer-link">Instagram</a>
+          <a href="https://x.com/home" target="_blank" rel="noreferrer" className="footer-link">X / Twitter</a>
         </div>
       </div>
     </footer>
@@ -514,6 +411,47 @@ const Footer = () => {
 function App() {
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (loading) return;
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -10% 0px',
+      threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const iframe = entry.target;
+        const isVimeo = iframe.src.includes('vimeo');
+        
+        if (entry.isIntersecting) {
+          if (isVimeo) {
+            iframe.contentWindow.postMessage('{"method":"play"}', '*');
+          } else {
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          }
+        } else {
+          if (isVimeo) {
+            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+          } else {
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Give DOM time to render iframes
+    setTimeout(() => {
+      const iframes = document.querySelectorAll('.scroll-auto-video');
+      iframes.forEach((iframe) => observer.observe(iframe));
+    }, 100);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loading]);
+
   return (
     <>
       {loading && <Loader onComplete={() => setLoading(false)} />}
@@ -521,11 +459,13 @@ function App() {
         <div className="app-wrapper">
           <Navbar />
           <Hero />
-          <Portfolio />
-          <Services />
-          <About />
+          <SocialProof />
+          <ClientReview />
+          <FeaturedWork />
+          <Results />
           <Process />
-          <Contact />
+          <Services />
+          <CTA />
           <Footer />
         </div>
       )}
