@@ -5,16 +5,16 @@
   --bg-main: #0A0A0A;
   --bg-surface: #111111;
   --text-main: #F5F5F5;
-  --text-muted: #A1A1AA; /* Added muted for subtext */
+  --text-muted: #A1A1AA;
   --accent: #4F46E5;
   --success: #22C55E;
-  
+
   --radius: 24px;
-  
+
   --glass: rgba(17, 17, 17, 0.7);
   --glass-border: rgba(245, 245, 245, 0.05);
   --glass-hover: rgba(245, 245, 245, 0.1);
-  
+
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -24,17 +24,30 @@
   --color-success: #22C55E;
   --color-primary: #F5F5F5;
   --color-surface: #111111;
-  
+
   --animate-fade-up: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-reveal: reveal 1s cubic-bezier(0.16, 1, 0.3, 1);
 
   @keyframes fadeUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
+
   @keyframes reveal {
-    from { clip-path: inset(100% 0 0 0); }
-    to { clip-path: inset(0 0 0 0); }
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0);
+    }
   }
 }
 
@@ -53,6 +66,10 @@
   }
 
   body {
+    /* Plain CSS fallbacks ensure visibility even if Tailwind fails */
+    background-color: #0A0A0A;
+    color: #F5F5F5;
+    /* Tailwind classes */
     @apply bg-[#0A0A0A] text-[#F5F5F5] selection:bg-[#4F46E5]/30 selection:text-white;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -60,26 +77,33 @@
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: 'Inter', sans-serif;
     letter-spacing: -0.02em;
     font-weight: 600;
   }
 
-  pre, code {
+  pre,
+  code {
     font-family: 'IBM Plex Mono', monospace;
   }
 
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: var(--bg-main);
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--bg-surface);
     border-radius: var(--radius);
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(245, 245, 245, 0.2);
   }
@@ -96,9 +120,9 @@
   }
 
   .smooth-transition {
-    @apply transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
+
   .glass {
     @apply bg-[#111111]/70 backdrop-blur-xl border border-white/[0.05] shadow-2xl;
   }

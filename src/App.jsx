@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Play, Video, Smartphone, Zap, BarChart2, Clock, PlayCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import YouTubePlayer from './YouTubePlayer';
 import './App.css';
 
 import profileImg from './assets/profile.webp';
@@ -39,7 +41,11 @@ const Loader = ({ onComplete }) => {
   }, [percent, onComplete]);
 
   return (
-    <div className={`loader-container ${hidden ? 'is-hidden' : ''}`}>
+    <motion.div
+      className={`loader-container ${hidden ? 'is-hidden' : ''}`}
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: { duration: 0.4 } }}
+    >
       <div className="loader-inner">
         <div className="loader-logo">
           <span>Siyam Saifullah</span>
@@ -48,7 +54,7 @@ const Loader = ({ onComplete }) => {
           <div className="loader-progress-bar" style={{ width: `${percent}%` }} />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -75,11 +81,11 @@ const Navbar = () => {
           <a href="#services" className="nav-item">Services</a>
         </div>
         <a href="#contact" className="btn-primary-nav">Hire Me</a>
-        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
+        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
           <MenuIcon />
         </button>
       </div>
-      
+
       {/* Mobile Nav */}
       <div className="mobile-nav" data-open={isOpen ? '1' : '0'}>
         <a href="#work" className="mobile-item" onClick={() => setIsOpen(false)}>Work</a>
@@ -99,14 +105,43 @@ const MenuIcon = () => (
   </svg>
 );
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+  }
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+};
+
 const Hero = () => {
   return (
     <section className="hero">
-      <div className="container hero-layout animate-fade-up">
-        <div className="hero-text-content">
-          <div className="hero-avatar-wrapper animate-fade-up" style={{ marginBottom: '1.5rem' }}>
+      <div className="container hero-layout">
+        <motion.div
+          className="hero-text-content"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            className="hero-avatar-wrapper"
+            style={{ marginBottom: '1.5rem' }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
             <img src={profileImg} alt="Siyam Saifullah" className="hero-avatar-large" style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--accent)' }} />
-          </div>
+          </motion.div>
           <h1 className="hero-title">
             Content that <br />
             <span className="accent-text">commands</span> attention.
@@ -122,17 +157,22 @@ const Hero = () => {
               Hire Me
             </a>
           </div>
-        </div>
-        <div className="hero-image-wrapper">
-          <iframe 
-            src="https://player.vimeo.com/video/1209555182?api=1&title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1&amp;muted=0" 
+        </motion.div>
+        <motion.div
+          className="hero-image-wrapper"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <iframe
+            src="https://player.vimeo.com/video/1209555182?api=1&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&loop=1&muted=0"
             className="hero-video-reel scroll-auto-video"
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             frameBorder="0"
             title="Timeline 1"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -140,54 +180,65 @@ const Hero = () => {
 
 const SocialProof = () => {
   return (
-    <section className="social-proof">
+    <motion.section
+      className="social-proof"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
       <div className="container">
         <div className="stats-grid">
-          <div className="stat-item">
+          <motion.div className="stat-item" variants={staggerItem}>
             <span className="stat-num">10M+</span>
             <span className="stat-label">Views Generated</span>
-          </div>
-          <div className="stat-item">
+          </motion.div>
+          <motion.div className="stat-item" variants={staggerItem}>
             <span className="stat-num">500+</span>
             <span className="stat-label">Videos Edited</span>
-          </div>
-          <div className="stat-item">
+          </motion.div>
+          <motion.div className="stat-item" variants={staggerItem}>
             <span className="stat-num">30+</span>
             <span className="stat-label">Happy Clients</span>
-          </div>
-          <div className="stat-item">
+          </motion.div>
+          <motion.div className="stat-item" variants={staggerItem}>
             <span className="stat-num">48h</span>
             <span className="stat-label">Avg Turnaround</span>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
+};
+
+const extractVideoId = (url) => {
+  const match = url.match(/\/embed\/([a-zA-Z0-9_-]+)/);
+  return match ? match[1] : null;
 };
 
 const ClientReview = () => {
   return (
-    <section className="client-review-section" style={{ padding: '4rem 0', background: 'var(--bg-secondary)' }}>
+    <motion.section
+      className="client-review-section"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
       <div className="container">
-        <div className="section-header-centered animate-fade-up">
+        <div className="section-header-centered">
           <h2 className="section-title">Client Review</h2>
           <p className="section-subtitle-text">Hear directly from the creators I work with.</p>
         </div>
-        <div className="review-video-wrapper" style={{ maxWidth: '800px', margin: '0 auto', borderRadius: '12px', overflow: 'hidden', aspectRatio: '16/9' }}>
-          <iframe 
+        <div className="review-video-wrapper">
+          <YouTubePlayer
+            videoId="xvLJ-11R-dU"
             className="scroll-auto-video"
-            width="100%" 
-            height="100%" 
-            src="https://www.youtube-nocookie.com/embed/xvLJ-11R-dU?enablejsapi=1&rel=0&modestbranding=1" 
-            title="Client Testimonial for Siyam Saifullah" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            allowFullScreen
-          ></iframe>
+            title="Client Testimonial for Siyam Saifullah"
+          />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -195,9 +246,12 @@ const ProjectCard = ({ title, category, image, iframeSrc, isVertical }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div 
+    <motion.div
       className={`portfolio-item ${isVertical ? 'vertical' : ''}`}
       onClick={() => setIsPlaying(true)}
+      variants={staggerItem}
+      whileHover={{ y: -5 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       {!isPlaying && (
         <>
@@ -213,18 +267,16 @@ const ProjectCard = ({ title, category, image, iframeSrc, isVertical }) => {
           </div>
         </>
       )}
-      
+
       {isPlaying && (
-        <iframe
-          src={`${iframeSrc}?autoplay=1&rel=0&modestbranding=1`}
+        <YouTubePlayer
+          videoId={extractVideoId(iframeSrc)}
           className="card-video-preview"
-          frameBorder="0"
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowFullScreen
           title={title}
+          autoplay={true}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 
@@ -245,31 +297,49 @@ const FeaturedWork = () => {
   return (
     <section id="work" className="portfolio-section">
       <div className="container">
-        <div className="section-header-centered animate-fade-up">
+        <motion.div
+          className="section-header-centered"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
           <h2 className="section-title">Selected Works</h2>
           <p className="section-subtitle-text">The portfolio is the product. See the impact of premium editing.</p>
-        </div>
-        
+        </motion.div>
+
         <div className="category-block">
           <div className="category-header">
             <h3>Short-Form (Reels, Shorts, TikTok)</h3>
           </div>
-          <div className="grid-vertical">
+          <motion.div
+            className="grid-vertical"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+          >
             {shortFormProjects.map((p, i) => (
               <ProjectCard key={i} {...p} />
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <div className="category-block">
           <div className="category-header">
             <h3>Long-Form (Talking Heads, Documentary)</h3>
           </div>
-          <div className="portfolio-grid">
+          <motion.div
+            className="portfolio-grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+          >
             {longFormProjects.map((p, i) => (
               <ProjectCard key={i} {...p} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -278,26 +348,38 @@ const FeaturedWork = () => {
 
 const Results = () => {
   return (
-    <section className="results-section">
+    <motion.section
+      className="results-section"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
       <div className="container">
-        <div className="section-header-centered animate-fade-up">
+        <div className="section-header-centered">
           <h2 className="section-title">Client Outcomes</h2>
           <p className="section-subtitle-text">Beyond just nice cuts, I focus on metrics that matter to your business.</p>
         </div>
-        <div className="results-grid">
-          <div className="result-card">
-            <BarChart2 size={32} className="accent-text" style={{marginBottom: '1rem'}} />
+        <motion.div
+          className="results-grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
+          <motion.div className="result-card" variants={staggerItem}>
+            <BarChart2 size={32} className="accent-text" style={{ marginBottom: '1rem' }} />
             <h3>Better Retention</h3>
             <p>I build narrative arcs and visual hooks specifically engineered to stop the scroll and keep viewers engaged until the very end.</p>
-          </div>
-          <div className="result-card">
-            <Clock size={32} className="accent-text" style={{marginBottom: '1rem'}} />
+          </motion.div>
+          <motion.div className="result-card" variants={staggerItem}>
+            <Clock size={32} className="accent-text" style={{ marginBottom: '1rem' }} />
             <h3>Faster Turnaround</h3>
             <p>Reliable delivery timelines without sacrificing premium quality. Get your content ready for publishing exactly when you need it.</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -310,35 +392,61 @@ const Process = () => {
   ];
 
   return (
-    <section id="process" className="process-section">
+    <motion.section
+      id="process"
+      className="process-section"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
       <div className="container">
-        <div className="section-header-centered animate-fade-up">
+        <div className="section-header-centered">
           <h2 className="section-title">Streamlined Process</h2>
           <p className="section-subtitle-text">A professional workflow designed to reduce client anxiety.</p>
         </div>
-        <div className="process-grid">
+        <motion.div
+          className="process-grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
           {steps.map((step, i) => (
-            <div key={i} className="process-item">
+            <motion.div key={i} className="process-item" variants={staggerItem}>
               <span className="process-number">{step.num}</span>
               <h3>{step.title}</h3>
               <p>{step.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
 const Services = () => {
   return (
-    <section id="services" className="services-section">
+    <motion.section
+      id="services"
+      className="services-section"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
       <div className="container">
-        <div className="section-header-centered animate-fade-up">
+        <div className="section-header-centered">
           <h2 className="section-title">Specializations</h2>
         </div>
-        <div className="services-grid">
-          <div className="service-card">
+        <motion.div
+          className="services-grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
+          <motion.div className="service-card" variants={staggerItem}>
             <Smartphone size={32} className="service-icon" />
             <h3>Shorts Editing</h3>
             <p>High-energy vertical content that drives organic growth and captures new audiences.</p>
@@ -347,8 +455,8 @@ const Services = () => {
               <li>Motion Graphics</li>
               <li>Sound Design</li>
             </ul>
-          </div>
-          <div className="service-card">
+          </motion.div>
+          <motion.div className="service-card" variants={staggerItem}>
             <Video size={32} className="service-icon" />
             <h3>Talking Heads</h3>
             <p>Educational and authority-building content crafted to maximize viewer watch time.</p>
@@ -357,8 +465,8 @@ const Services = () => {
               <li>Relevant B-Roll</li>
               <li>Pacing & Zooms</li>
             </ul>
-          </div>
-          <div className="service-card">
+          </motion.div>
+          <motion.div className="service-card" variants={staggerItem}>
             <Zap size={32} className="service-icon" />
             <h3>AI Visuals</h3>
             <p>Cutting-edge AI integration to tell stories that would otherwise be impossible.</p>
@@ -367,17 +475,24 @@ const Services = () => {
               <li>Creative Concepts</li>
               <li>Visual Storytelling</li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
 const CTA = () => {
   return (
-    <section id="contact" className="cta-section">
-      <div className="container animate-fade-up">
+    <motion.section
+      id="contact"
+      className="cta-section"
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+    >
+      <div className="container">
         <h2 className="cta-title">Need an editor who understands retention and storytelling?</h2>
         <p className="section-subtitle-text">Let's build content people actually watch.</p>
         <div className="cta-actions">
@@ -389,7 +504,7 @@ const CTA = () => {
           </a>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -413,7 +528,7 @@ function App() {
 
   useEffect(() => {
     if (loading) return;
-    
+
     const observerOptions = {
       root: null,
       rootMargin: '-10% 0px -10% 0px',
@@ -424,7 +539,7 @@ function App() {
       entries.forEach((entry) => {
         const iframe = entry.target;
         const isVimeo = iframe.src.includes('vimeo');
-        
+
         if (entry.isIntersecting) {
           if (isVimeo) {
             iframe.contentWindow.postMessage('{"method":"play"}', '*');
@@ -454,9 +569,16 @@ function App() {
 
   return (
     <>
-      {loading && <Loader onComplete={() => setLoading(false)} />}
+      <AnimatePresence mode="wait">
+        {loading && <Loader key="loader" onComplete={() => setLoading(false)} />}
+      </AnimatePresence>
       {!loading && (
-        <div className="app-wrapper">
+        <motion.div
+          className="app-wrapper"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Navbar />
           <Hero />
           <SocialProof />
@@ -467,7 +589,7 @@ function App() {
           <Services />
           <CTA />
           <Footer />
-        </div>
+        </motion.div>
       )}
     </>
   );
