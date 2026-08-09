@@ -190,15 +190,15 @@ const SocialProof = () => {
       <div className="container">
         <div className="stats-grid">
           <motion.div className="stat-item" variants={staggerItem}>
-            <span className="stat-num">10M+</span>
+            <span className="stat-num">100K+</span>
             <span className="stat-label">Views Generated</span>
           </motion.div>
           <motion.div className="stat-item" variants={staggerItem}>
-            <span className="stat-num">500+</span>
+            <span className="stat-num">20+</span>
             <span className="stat-label">Videos Edited</span>
           </motion.div>
           <motion.div className="stat-item" variants={staggerItem}>
-            <span className="stat-num">30+</span>
+            <span className="stat-num">5+</span>
             <span className="stat-label">Happy Clients</span>
           </motion.div>
           <motion.div className="stat-item" variants={staggerItem}>
