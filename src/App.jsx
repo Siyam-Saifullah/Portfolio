@@ -165,12 +165,12 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
           <iframe
-            src="https://player.vimeo.com/video/1209555182?api=1&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&loop=1&muted=0"
+            src="https://www.youtube.com/embed/wWWMIZr4sgw?autoplay=1&loop=1&playlist=wWWMIZr4sgw&controls=1&modestbranding=1&rel=0&enablejsapi=1"
             className="hero-video-reel scroll-auto-video"
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             frameBorder="0"
-            title="Timeline 1"
+            title="Hero Video"
           />
         </motion.div>
       </div>
@@ -289,6 +289,8 @@ const FeaturedWork = () => {
   ];
 
   const longFormProjects = [
+    { title: 'Featured Documentary', category: 'Documentary', image: 'https://img.youtube.com/vi/QPII7XWo4dU/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/QPII7XWo4dU', isVertical: false },
+    { title: 'Talking Head Showcase', category: 'Talking Heads', image: 'https://img.youtube.com/vi/Jford3iFSTA/hqdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/Jford3iFSTA', isVertical: false },
     { title: 'Brand Documentary', category: 'Documentary', image: 'https://img.youtube.com/vi/gNZN6h7EBTM/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/gNZN6h7EBTM', isVertical: false },
     { title: 'Talking Head Series', category: 'Talking Heads', image: 'https://img.youtube.com/vi/nvk7W27hkkg/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/nvk7W27hkkg', isVertical: false },
     { title: 'Siyam Saifullah - Professional Video Editing Workflow', category: 'Long Form', image: 'https://img.youtube.com/vi/XWvZdVAXV8I/maxresdefault.jpg', iframeSrc: 'https://www.youtube-nocookie.com/embed/XWvZdVAXV8I', isVertical: false },
@@ -310,23 +312,6 @@ const FeaturedWork = () => {
 
         <div className="category-block">
           <div className="category-header">
-            <h3>Short-Form (Reels, Shorts, TikTok)</h3>
-          </div>
-          <motion.div
-            className="grid-vertical"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            {shortFormProjects.map((p, i) => (
-              <ProjectCard key={i} {...p} />
-            ))}
-          </motion.div>
-        </div>
-
-        <div className="category-block">
-          <div className="category-header">
             <h3>Long-Form (Talking Heads, Documentary)</h3>
           </div>
           <motion.div
@@ -337,6 +322,23 @@ const FeaturedWork = () => {
             viewport={{ once: true, margin: '-50px' }}
           >
             {longFormProjects.map((p, i) => (
+              <ProjectCard key={i} {...p} />
+            ))}
+          </motion.div>
+        </div>
+
+        <div className="category-block">
+          <div className="category-header">
+            <h3>Short-Form (Reels, Shorts, TikTok)</h3>
+          </div>
+          <motion.div
+            className="grid-vertical"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+          >
+            {shortFormProjects.map((p, i) => (
               <ProjectCard key={i} {...p} />
             ))}
           </motion.div>
@@ -538,19 +540,19 @@ function App() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const iframe = entry.target;
-        const isVimeo = iframe.src.includes('vimeo');
+        const isVimeo = iframe.src ? iframe.src.includes('vimeo') : false;
 
         if (entry.isIntersecting) {
           if (isVimeo) {
-            iframe.contentWindow.postMessage('{"method":"play"}', '*');
+            iframe.contentWindow?.postMessage('{"method":"play"}', '*');
           } else {
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            iframe.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
           }
         } else {
           if (isVimeo) {
-            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+            iframe.contentWindow?.postMessage('{"method":"pause"}', '*');
           } else {
-            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            iframe.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
           }
         }
       });

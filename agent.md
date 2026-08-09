@@ -95,13 +95,15 @@
 - **Framer-motion**: fade-up on scroll, stagger children, spring hover on cards, AnimatePresence for loader
 
 ## URLs & Videos
-- **Vimeo Showreel**: `https://player.vimeo.com/video/1209555182` (hero section)
+- **Hero Video**: `wWWMIZr4sgw` (YouTube)
 - **Client Review**: `xvLJ-11R-dU` (YouTube)
 - **Portfolio Videos** (YouTube):
   - `a7saLfE73_Y` (Educational Short)
   - `ZKJ36Pu3o78` (Tech Review Reel)
   - `KxLkb1rH0Qg` (Podcast Clip)
   - `5OrsIIRBWxQ` (Vlog Highlight)
+  - `QPII7XWo4dU` (Featured Documentary)
+  - `Jford3iFSTA` (Talking Head Showcase)
   - `gNZN6h7EBTM` (Brand Documentary)
   - `nvk7W27hkkg` (Talking Head Series)
   - `XWvZdVAXV8I` (Siyam Saifullah Workflow)
